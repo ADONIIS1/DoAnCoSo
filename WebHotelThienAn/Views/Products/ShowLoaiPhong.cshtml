@@ -1,0 +1,11 @@
+﻿@model IEnumerable<WebHotelThienAn.Models.LoaiPhong>
+
+<h3>Loại Phòng </h3>
+
+    @foreach (var item in Model)
+    {
+        <div class="filter">
+            <a href="@Url.Action("ProductWithArea","Products",new { idKhuVuc = ViewBag.idKhuVuc , idLoaiPhong = item.IDLoaiPhong})"><p>@item.TenLoaiPhong</p></a><br />
+        </div>
+    }
+

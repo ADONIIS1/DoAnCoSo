@@ -1,0 +1,8 @@
+﻿@model IEnumerable<WebHotelThienAn.Models.ChiTietTienNghi>
+
+<p>
+    @foreach (var item in Model)
+     {
+            <a>@item.Soluong</a> <i class="@item.TienNghi.AnhDaiDien"></i> <a> @item.TienNghi.TenTN &nbsp; &nbsp; </a>
+     }
+</p>

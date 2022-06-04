@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WebHotelThienAn.Models.Home>
+
+@{
+    ViewBag.Title = "AllProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="destination" id="destination">
+
+    <div class="heading">
+    
+        <h1>Tìm theo loại chỗ nghỉ</h1>
+    </div>
+
+    <div class="box-container">
+        @foreach (var item in Model)
+        {
+            if (item.l == "LoaiPhong")
+            {
+                <div class="box" data-aos="fade-up" data-aos-delay="150">
+                    <div class="image">
+                        <img src= "@item.url" >
+                    </div>
+                    <div class="content">
+                        <h3>@item.Ten</h3>
+                        <p>@item.soluong Chỗ @item.Ten</p>
+                        <a href="@Url.Action("SelectArea","Products",new { idLoaiPhong = item.IDHome})">Xem Thêm <i class="fas fa-angle-right"></i></a>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+
+</section>
+<section class="gallery" id="gallery">
+
+    <div class="heading">
+        <h1>Khám phá Việt Nam</h1>
+        <span>Các điểm đến phổ biến này có nhiều điều chờ đón bạn</span>
+
+    </div>
+
+    <div class="box-container">
+        @foreach (var item in Model)
+        {
+            if (item.l == "KhuVuc")
+            {
+                <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
+                    <a href="@Url.Action("ProductWithArea","Products",new { idKhuVuc = item.IDHome})"><img src="@item.url" alt=""></a>
+                    <span>@item.soluong Chỗ </span>
+                    <h3>@item.Ten</h3>
+                </div>
+            }
+        }
+    </div>
+
+</section>

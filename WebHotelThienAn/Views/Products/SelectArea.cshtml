@@ -1,0 +1,35 @@
+﻿@model  IEnumerable<WebHotelThienAn.Models.KhuVuc>
+@{
+    ViewBag.Title = "SelectArea";
+    Layout = "~/Views/Shared/LayoutListing.cshtml";
+}
+<section id="featured" class="py-4">
+    <div class="container">
+        <div class="title-wrap">
+            <span class="sm-title">Bạn Hãy Chọn Khu Vực Cần Đặt </span>
+            <h2 class="lg-title">@ViewBag.TenKV</h2>
+
+        </div>
+        <div class="featured-row">
+            @foreach (var item in Model)
+            {
+
+                <div class="featured-item my-2 shadow">
+                        <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong })">
+                        <img src="~/Content/images/Hue.png" alt="featured place">
+                        </a>
+                        <div class="featured-item-content">
+                            <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong })">
+                                <span>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    @item.TenKV
+                                </span>
+                            </a>
+                        </div>
+                </div>
+
+            }
+        </div>
+        </div>
+</section>
+<!-- end of popular places section -->
