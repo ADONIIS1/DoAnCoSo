@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Quên Mật Khẩu";
+    Layout = "~/Views/Shared/LayoutAccounts.cshtml";
+}
+
+
+<div class="row">
+    @*<div class="col-lg-6 d-none d-lg-block bg-password-image">
+        <a href="@Url.Action("AllProducts", "Products")">
+            <img src="~/Content/images/anhlogo.png" />
+        </a>
+    </div>*@
+    <div class="col-lg-6">
+        <div class="p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-2">Bạn Đã Quên Mật Khẩu?</h1>
+                <p class="mb-4">
+                    Chúng tôi sẽ gửi mail xác nhận về Mail!!!
+                </p>
+            </div>
+            @using (Html.BeginForm("Forget", "Accounts", FormMethod.Post, htmlAttributes: new { @class = "user" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <input type="email" class="form-control form-control-user"
+                           name="Email" aria-describedby="emailHelp"
+                           placeholder="Địa Chỉ Email">
+                </div>
+                <input type="Submit" class="btn btn-primary btn-user btn-block" value="Reset Mật Khẩu" />
+                <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;text-align:center;">@ViewBag.ThongBao</div>
+            }
+            <hr>
+            <div class="text-center">
+                <a class="small" href="@Url.Action("Login","Accounts")">Bạn đã có tài khoản ?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -23,8 +23,41 @@
     <nav id="navBar" class="navbar-white">
         <a href="@Url.Action("AllProducts", "Products")"><img src="~/Content/images/logothienan.png" class="logo"></a>
 
-        <a href="#" class="register-btn">Đăng Nhâp</a>
 
+        @if (Session["Email"] != null)
+        {
+
+
+            <div class="navbar1">
+                <div class="nav_right">
+                    <ul>
+                        <li class="nr_li dd_main">
+
+                            <img src="~/Content/images/icons8_user_50px_9.png" />
+                            <div class="dd_menu">
+                                <div class="dd_right">
+                                    <ul>
+                                        <a href="@Url.Action("UpdateInfo", "Accounts")">
+                                        <li>Hồ sơ cá nhân</li></a>
+                                        <a href="@Url.Action("ChangePass", "Accounts")">
+                                        <li>Đổi Mật Khẩu</li></a>
+                                        <a href="#">
+                                        <li>Phòng đã đặt</li></a>
+                                        <a href="@Url.Action("Logout", "Accounts")">
+                                        <li>Đăng xuất</li></a>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        }
+        else
+        {
+            <a href="@Url.Action("Login","Accounts")" class="register-btn">Đăng Nhâp</a>
+        }
         <i class="fa-solid fa-bars" onclick="togglebtn()"></i>
     </nav>
 
@@ -46,6 +79,11 @@
         function togglebtn(){
             navBar.classList.toggle("hidemenu");
         }
+        var dd_main = document.querySelector(".dd_main");
+
+        dd_main.addEventListener("click", function () {
+            this.classList.toggle("active");
+        })
     </script>
 </body>
 </html>

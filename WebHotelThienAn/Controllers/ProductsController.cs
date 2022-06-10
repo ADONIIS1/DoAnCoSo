@@ -78,7 +78,7 @@ namespace WebHotelThienAn.Controllers
             var D_SanPham = data.Phongs.Where(m => m.MaPhong == id).First();
             return View(D_SanPham);
         }
-        public ActionResult ShowLoaiPhong(int? id) // show navigation chọn sản phẩm theo thương hiệu (nhà cung cấp)
+        public ActionResult ShowLoaiPhong(int? id) 
         {
             var product = data.LoaiPhongs.ToList();
 
@@ -86,7 +86,7 @@ namespace WebHotelThienAn.Controllers
 
             return PartialView(product);
         }
-        public ActionResult ShowTietIchPhong(int? MaP) // show navigation chọn sản phẩm theo thương hiệu (nhà cung cấp)
+        public ActionResult ShowTietIchPhong(int? MaP) 
         {
             var product = data.ChiTietTienNghis.Where(p=>p.MaPhong == MaP && p.TinhTrang == true).ToList();
 

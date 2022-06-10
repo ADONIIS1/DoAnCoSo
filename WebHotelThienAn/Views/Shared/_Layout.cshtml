@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>complete responsive travel website design tutorial</title>
+    <title>Thiên An</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -17,7 +17,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
 
 </head>
 <body>
@@ -25,12 +26,43 @@
     <!-- header section starts  -->
 
     <header class="header">
-        <div id="menu-btn" class="fas fa-bars">
-
-        </div>
+        <div id="menu-btn" class="fas fa-bars"> </div>
         <a data-aos="zoom-in-left" data-aos-delay="150" href="#" class="logo"> <i class="fas fa-paper-plane"></i>Thiên An </a>
-        <a data-aos="zoom-in-left" data-aos-delay="1300" href="#" class="btn">Đăng Nhập</a>
+        @if (Session["Email"] != null)
+        {
+            <div class="navbar">
+                <div class="nav_right">
+                    <ul>
+                        <li class="nr_li dd_main">
+                            <img src="~/Content/images/icons8_user_50px_1.png" alt="profile_img">
+
+                            <div class="dd_menu">
+                                <div class="dd_right">
+                                    <ul>
+                                        <a href="@Url.Action("UpdateInfo", "Accounts")">
+                                        <li>Hồ sơ cá nhân</li></a>
+                                        <a href="@Url.Action("ChangePass", "Accounts")">
+                                        <li>Đổi Mật Khẩu</li></a>
+                                        <a href="#">
+                                        <li>Phòng đã đặt</li></a>
+                                        <a href="@Url.Action("Logout", "Accounts")">
+                                        <li>Đăng xuất</li></a>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        }
+        else
+        {
+        <a data-aos="zoom-in-left" data-aos-delay="1300" href="@Url.Action("Login", "Accounts")" class="btn">Đăng Nhập</a>
+        }
+
     </header>
+
 
     <!-- header section ends -->
     <!-- home section starts  -->
@@ -68,7 +100,7 @@
     <section class="services" id="services">
 
         <div class="heading">
-            
+
             <h1>Tiêu Chí</h1>
         </div>
 
@@ -119,11 +151,10 @@
             <span>start your adventures</span>
             <h3>Let's Explore This World</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum voluptatum praesentium amet quibusdam quam officia suscipit odio.</p>-->
-            <!-- <a href="#book-form" class="btn">book now</a> -->
-        <!--</div>
+    <!-- <a href="#book-form" class="btn">book now</a> -->
+    <!--</div>
 
     </div>-->
-
     <!-- banner section ends -->
     <!-- footer section starts  -->
 
@@ -147,7 +178,7 @@
                 <a href="#home" class="links"> <i class="fas fa-arrow-right"></i> home </a>
                 <a href="#about" class="links"> <i class="fas fa-arrow-right"></i> about </a>
                 <a href="#destination" class="links"> <i class="fas fa-arrow-right"></i> destination </a>
-            
+
             </div>
 
 
@@ -169,6 +200,12 @@
             duration: 800,
             offset: 150,
         });
+
+        var dd_main = document.querySelector(".dd_main");
+
+        dd_main.addEventListener("click", function () {
+            this.classList.toggle("active");
+        })
 
     </script>
 

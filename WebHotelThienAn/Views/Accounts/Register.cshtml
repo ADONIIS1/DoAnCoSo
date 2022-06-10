@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Đăng Kí";
+    Layout = "~/Views/Shared/LayoutAccounts.cshtml";
+}
+@section Scripts{
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams.get('thongbao'))
+        if (urlParams.get('thongbao') != null) {
+            document.querySelector('.toast-body').innerText = "🔔" + urlParams.get('thongbao')
+            $('.toast').toast('show')
+        }
+    </script>
+}
+
+
+<div class="row">
+    @*<div class="col-lg-5 d-none d-lg-block bg-register-image">
+        <a href="@Url.Action("AllProducts", "Products")">
+            <img src="~/Content/images/anhlogo.png" />
+        </a>
+
+    </div>*@
+    <div class="col-lg-7">
+        <div class="p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Tạo Tài Khoản Thành Viên</h1>
+            </div>
+            @using (Html.BeginForm("Register", "Accounts", FormMethod.Post, htmlAttributes: new { @class = "user" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="name" placeholder="Họ và Tên">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control form-control-user" name="email" placeholder="Địa Chỉ Email">
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <input type="password" class="form-control form-control-user" name="password" placeholder="Mật Khẩu">
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control form-control-user" name="repassword" placeholder="Nhập Lại Mật Khẩu">
+                    </div>
+                </div>
+                <input type="Submit" class="btn btn-primary btn-user btn-block" value="Đăng Ký" />
+
+            }
+            <hr>
+            <div class="text-center">
+                <a class="small" href="@Url.Action("Forget","Accounts")">Quên Mật Khẩu?</a>
+            </div>
+            <div class="text-center">
+                <a class="small" href="@Url.Action("Login","Accounts")">Bạn đã có tài khoản? Đăng Nhập!</a>
+            </div>
+        </div>
+    </div>
+</div>

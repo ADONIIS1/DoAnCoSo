@@ -8,9 +8,10 @@
 <section class="destination" id="destination">
 
     <div class="heading">
-    
+
         <h1>Tìm theo loại chỗ nghỉ</h1>
     </div>
+
 
     <div class="box-container">
         @foreach (var item in Model)
@@ -19,7 +20,7 @@
             {
                 <div class="box" data-aos="fade-up" data-aos-delay="150">
                     <div class="image">
-                        <img src= "@item.url" >
+                        <img src="@item.url"/>
                     </div>
                     <div class="content">
                         <h3>@item.Ten</h3>
@@ -47,7 +48,7 @@
             if (item.l == "KhuVuc")
             {
                 <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
-                    <a href="@Url.Action("ProductWithArea","Products",new { idKhuVuc = item.IDHome})"><img src="@item.url" alt=""></a>
+                    <a href="@Url.Action("ProductWithArea","Products",new { idKhuVuc = item.IDHome})"><img src="@item.url" alt=""/></a>
                     <span>@item.soluong Chỗ </span>
                     <h3>@item.Ten</h3>
                 </div>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Đăng Nhập";
+    Layout = "~/Views/Shared/LayoutAccounts.cshtml";
+}
+
+@section Scripts{
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams.get('thongbao'))
+        if (urlParams.get('thongbao') != null) {
+            document.querySelector('.toast-body').innerText = "🔔" + urlParams.get('thongbao')
+            $('.toast').toast('show')
+        }
+    </script>
+}
+
+<div class="row">
+    @*<div class="col-lg-6 d-none d-lg-block bg-password-image">
+        <a href="@Url.Action("AllProducts", "Products")">
+            <img src="~/Content/images/logothienan.png" />
+        </a>
+    </div>*@
+    <div class="col-lg-6">
+        <div class="p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Đăng Nhập</h1>
+            </div>
+            @using (Html.BeginForm("Login", "Accounts", FormMethod.Post, htmlAttributes: new { @class = "user" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <input type="email" class="form-control form-control-user"
+                           name="email" aria-describedby="emailHelp"
+                           placeholder="Địa Chỉ Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user"
+                           name="MatKhau" placeholder="Mật Khẩu">
+                </div>
+                <input type="Submit" class="btn btn-primary btn-user btn-block" value="Đăng Nhập" />
+                <hr>
+
+            }
+            <hr>
+            <div class="text-center">
+                <a class="small" href="@Url.Action("Register","Accounts")">Tạo Tài Khoản !</a>
+            </div>
+            <div class="text-center">
+                <a class="small" href="@Url.Action("Forget","Accounts")">Quên Mật Khẩu ?</a>
+            </div>
+        </div>
+    </div>
+</div>

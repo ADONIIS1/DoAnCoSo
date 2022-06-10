@@ -1,0 +1,106 @@
+﻿@model WebHotelThienAn.Models.TaiKhoan
+@{
+    ViewBag.Title = "UpdateInfo";
+    Layout = "~/Views/Shared/LayoutAccounts.cshtml";
+}
+
+<div class="row">
+    @*<div class="col-lg-6 d-none d-lg-block bg-password-image">
+            <a href="@Url.Action("AllProducts", "Products")">
+                <img src="~/Content/images/anhlogo.png" />
+            </a>
+        </div>*@
+    <div class="col-lg-6">
+        <div class="p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Cập Nhật Thông Tin<h1>
+            </div>
+            @using (Html.BeginForm("UpdateInfo", "Accounts", FormMethod.Post, htmlAttributes: new { @class = "user" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                if (String.IsNullOrEmpty(Model.MatKhau))
+                {
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user" name="pass" placeholder="Mật khẩu">
+                        <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.Pass</div>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user" name="Repass" placeholder="Nhập lại mật khẩu">
+                        <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.RePass</div>
+                    </div>
+                }
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="Name" placeholder="Họ và Tên" value="@Model.HoTen">
+                    <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.Name</div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="SDT" placeholder="Số điện thoại" onkeypress='validate(event)' value="@Model.SDT">
+                    <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.SDT</div>
+                </div>
+                <div class="form-group">
+                    <input type="date" class="form-control form-control-user" name="NgaySinh">
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="GioiTinh">
+                        <option value="" selected disabled hidden>Giới Tính</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                    <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.GioiTinh</div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="DiaChi" placeholder="Địa Chỉ" value="@Model.DiaChi">
+                    <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.DiaChi</div>
+                </div>
+                <hr>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <a href="@Url.Action("AllProducts", "Products")" class="btn btn-danger btn-user btn-block">Hủy Bỏ</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="Submit" class="btn btn-primary btn-user btn-block" value="Xác Nhận" />
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <a class="small" href="@Url.Action("ChangePass","Accounts")">Đổi Mật Khẩu ?</a>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+    function validate(evt) {
+        var theEvent = evt || window.event;
+
+        // Handle paste
+        if (theEvent.type === 'paste') {
+            key = event.clipboardData.getData('text/plain');
+        } else {
+            // Handle key press
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+        }
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
+    if ("@String.IsNullOrEmpty(@Model.GioiTinh)" == "False") {
+        document.getElementsByName("GioiTinh")[0].value = "@Model.GioiTinh"
+    }
+
+    if ("@String.IsNullOrEmpty(Model.NgaySinh.ToString())" == "False") {
+        document.getElementsByName("NgaySinh")[0].value = "@Model.NgaySinh.GetValueOrDefault().ToString("yyyy-MM-dd")"
+    } else {
+        document.getElementsByName("NgaySinh")[0].value = "2000-01-01"
+    }
+    </script>
+}
+

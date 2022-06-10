@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Đổi Mật Khẩu";
+    Layout = "~/Views/Shared/LayoutAccounts.cshtml";
+}
+
+<div class="row">
+    @*<div class="col-lg-6 d-none d-lg-block bg-password-image">
+        <img src="~/Content/images/anhlogo.png" href="@Url.Action("AllProducts", "Products")" />
+    </div>*@
+    <div class="col-lg-6">
+        <div class="p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-2">Đổi Mật Khẩu </h1>
+            </div>
+            @using (Html.BeginForm("ChangePass", "Accounts", FormMethod.Post, htmlAttributes: new { @class = "user" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user" name="passOld" placeholder="Nhập Mật Khẩu Cũ">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user" name="passNew" placeholder="Nhập Mật Khẩu Mới">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user" name="passNew2" placeholder="Nhập Lại Mật Khẩu Mới">
+                </div>
+                <input type="Submit" class="btn btn-primary btn-user btn-block" value="Đổi Mật Khẩu" />
+                <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;text-align:center;">@ViewBag.ThongBao</div>
+            }
+            <hr>
+            <div class="text-center">
+                <a class="small" href="@Url.Action("Login","Accounts")">Quay lại Trang Đăng Nhập ?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
