@@ -630,7 +630,7 @@ namespace WebHotelThienAn.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDHoaDon", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDHoaDon", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int IDHoaDon
 		{
 			get
@@ -903,6 +903,8 @@ namespace WebHotelThienAn.Models
 		
 		private string _AnhDaiDien;
 		
+		private string _anhduphong;
+		
 		private EntitySet<Phong> _Phongs;
 		
     #region Extensibility Method Definitions
@@ -919,6 +921,8 @@ namespace WebHotelThienAn.Models
     partial void OnTieuDeChanged();
     partial void OnAnhDaiDienChanging(string value);
     partial void OnAnhDaiDienChanged();
+    partial void OnanhduphongChanging(string value);
+    partial void OnanhduphongChanged();
     #endregion
 		
 		public KhuVuc()
@@ -1023,6 +1027,26 @@ namespace WebHotelThienAn.Models
 					this._AnhDaiDien = value;
 					this.SendPropertyChanged("AnhDaiDien");
 					this.OnAnhDaiDienChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_anhduphong", DbType="NVarChar(100)")]
+		public string anhduphong
+		{
+			get
+			{
+				return this._anhduphong;
+			}
+			set
+			{
+				if ((this._anhduphong != value))
+				{
+					this.OnanhduphongChanging(value);
+					this.SendPropertyChanging();
+					this._anhduphong = value;
+					this.SendPropertyChanged("anhduphong");
+					this.OnanhduphongChanged();
 				}
 			}
 		}
@@ -1201,7 +1225,7 @@ namespace WebHotelThienAn.Models
 		
 		private string _AnhDaiDien;
 		
-		private System.Nullable<int> _TrangThai;
+		private System.Nullable<bool> _TrangThai;
 		
 		private EntitySet<Phong> _Phongs;
 		
@@ -1217,7 +1241,7 @@ namespace WebHotelThienAn.Models
     partial void OnSoLuongPhongChanged();
     partial void OnAnhDaiDienChanging(string value);
     partial void OnAnhDaiDienChanged();
-    partial void OnTrangThaiChanging(System.Nullable<int> value);
+    partial void OnTrangThaiChanging(System.Nullable<bool> value);
     partial void OnTrangThaiChanged();
     #endregion
 		
@@ -1307,8 +1331,8 @@ namespace WebHotelThienAn.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="Int")]
-		public System.Nullable<int> TrangThai
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="Bit")]
+		public System.Nullable<bool> TrangThai
 		{
 			get
 			{

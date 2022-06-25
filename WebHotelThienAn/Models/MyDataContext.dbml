@@ -21,7 +21,7 @@
   </Table>
   <Table Name="dbo.HoaDon" Member="HoaDons">
     <Type Name="HoaDon">
-      <Column Name="IDHoaDon" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IDHoaDon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="IDTaiKhoan" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="MaPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -40,6 +40,7 @@
       <Column Name="SoLuongPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="TieuDe" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="AnhDaiDien" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="anhduphong" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Association Name="KhuVuc_Phong" Member="Phongs" ThisKey="IDKhuVuc" OtherKey="IDKhuVuc" Type="Phong" />
     </Type>
   </Table>
@@ -56,7 +57,7 @@
       <Column Name="TenLoaiPhong" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="SoLuongPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AnhDaiDien" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="TrangThai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="LoaiPhong_Phong" Member="Phongs" ThisKey="IDLoaiPhong" OtherKey="IDLoaiPhong" Type="Phong" />
     </Type>
   </Table>

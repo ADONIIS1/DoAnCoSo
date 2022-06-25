@@ -22,7 +22,7 @@
                 @if (@String.IsNullOrEmpty(datethue) == false || @String.IsNullOrEmpty(datetra) == false)
                 {
                     <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong, datethue = datethue, datetra = datetra  })">
-                        <img src="@item.AnhDaiDien" alt="featured place" />
+                        <img src="@item.anhduphong" alt="featured place" />
                     </a>
                     <div class="featured-item-content">
                         <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong, datethue = datethue, datetra = datetra  })">
@@ -37,7 +37,7 @@
                 {
 
                     <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong })">
-                        <img src="@item.AnhDaiDien" alt="featured place" />
+                        <img src="@item.anhduphong" alt="featured place" />
                     </a>
                     <div class="featured-item-content">
                         <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong })">

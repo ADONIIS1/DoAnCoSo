@@ -189,7 +189,9 @@
     <Content Include="Content\images\gp.png" />
     <Content Include="Content\images\hanoi.jpg" />
     <Content Include="Content\images\hanoi.png" />
+    <Content Include="Content\images\hcm.jpg" />
     <Content Include="Content\images\HoChiminh.png" />
+    <Content Include="Content\images\hoian.jpg" />
     <Content Include="Content\images\HoiAn.png" />
     <Content Include="Content\images\home-bg.jpg" />
     <Content Include="Content\images\host.png" />
@@ -214,12 +216,14 @@
     <Content Include="Content\images\nhago.jpg" />
     <Content Include="Content\images\NhaTrang.png" />
     <Content Include="Content\images\nhatro.jpg" />
+    <Content Include="Content\images\phu-quoc.jpg" />
     <Content Include="Content\images\PhuQuoc.png" />
     <Content Include="Content\images\resort.jpg" />
     <Content Include="Content\images\search.png" />
     <Content Include="Content\images\story-1.png" />
     <Content Include="Content\images\tw.png" />
     <Content Include="Content\images\vila.jpg" />
+    <Content Include="Content\images\vungtau.jpg" />
     <Content Include="Content\images\VungTau.png" />
     <Content Include="Content\js\script.js" />
     <Content Include="Content\js\suggestions.js" />
