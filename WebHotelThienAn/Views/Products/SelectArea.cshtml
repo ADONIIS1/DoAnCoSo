@@ -3,6 +3,10 @@
     ViewBag.Title = "SelectArea";
     Layout = "~/Views/Shared/LayoutListing.cshtml";
 }
+@{
+    var datethue = ViewBag.datethue;
+    var datetra = ViewBag.datetra;
+}
 <section id="featured" class="py-4">
     <div class="container">
         <div class="title-wrap">
@@ -14,22 +18,43 @@
             @foreach (var item in Model)
             {
 
-                <div class="featured-item my-2 shadow">
-                        <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong })">
-                        <img src="@item.AnhDaiDien" alt="featured place"/>
+            <div class="featured-item my-2 shadow">
+                @if (@String.IsNullOrEmpty(datethue) == false || @String.IsNullOrEmpty(datetra) == false)
+                {
+                    <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong, datethue = datethue, datetra = datetra  })">
+                        <img src="@item.AnhDaiDien" alt="featured place" />
+                    </a>
+                    <div class="featured-item-content">
+                        <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong, datethue = datethue, datetra = datetra  })">
+                            <span>
+                                <i class="fas fa-map-marker-alt"></i>
+                                @item.TenKV
+                            </span>
                         </a>
-                        <div class="featured-item-content">
-                            <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong })">
-                                <span>
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    @item.TenKV
-                                </span>
-                            </a>
-                        </div>
-                </div>
+                    </div>
+                }
+                else
+                {
+
+                    <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong })">
+                        <img src="@item.AnhDaiDien" alt="featured place" />
+                    </a>
+                    <div class="featured-item-content">
+                        <a href="@Url.Action("ProductWithArea", "Products", new { idKhuVuc = item.IDKhuVuc, idLoaiPhong = ViewBag.idLoaiPhong })">
+                            <span>
+                                <i class="fas fa-map-marker-alt"></i>
+                                @item.TenKV
+                            </span>
+                        </a>
+                    </div>
+                }
+
+            </div>
 
             }
         </div>
-        </div>
+    </div>
 </section>
+
+
 <!-- end of popular places section -->

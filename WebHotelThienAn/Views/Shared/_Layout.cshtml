@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/Content/css/style.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
 
@@ -40,13 +40,13 @@
                                 <div class="dd_right">
                                     <ul>
                                         <a href="@Url.Action("UpdateInfo", "Accounts")">
-                                        <li>Hồ sơ cá nhân</li></a>
+                                        <li style="list-style: none;">Thông Tin cá nhân</li></a>
                                         <a href="@Url.Action("ChangePass", "Accounts")">
-                                        <li>Đổi Mật Khẩu</li></a>
-                                        <a href="#">
-                                        <li>Phòng đã đặt</li></a>
+                                        <li style="list-style: none;">Đổi Mật Khẩu</li></a>
+                                        <a href="@Url.Action("booking", "Accounts")">
+                                        <li style="list-style: none;">Phòng đã đặt</li></a>
                                         <a href="@Url.Action("Logout", "Accounts")">
-                                        <li>Đăng xuất</li></a>
+                                        <li style="list-style: none;">Đăng xuất</li></a>
                                     </ul>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
         }
         else
         {
-        <a data-aos="zoom-in-left" data-aos-delay="1300" href="@Url.Action("Login", "Accounts")" class="btn">Đăng Nhập</a>
+            <a data-aos="zoom-in-left" data-aos-delay="1300" href="@Url.Action("Login", "Accounts")" class="btn">Đăng Nhập</a>
         }
 
     </header>
@@ -74,24 +74,34 @@
     <!-- booking form section starts  -->
 
     <section class="book-form" id="book-form">
-
-        <form action="">
-            <div data-aos="zoom-in" data-aos-delay="150" class="inputBox">
-                <span>Địa Điểm?</span>
-                <input type="text" placeholder="Tên Địa Điểm" value="">
-            </div>
-            <div data-aos="zoom-in" data-aos-delay="300" class="inputBox">
-                <span>Ngày Thuê?</span>
-                <input type="date" value="">
-            </div>
-            <div data-aos="zoom-in" data-aos-delay="300" class="inputBox">
-                <span>Ngày Trả?</span>
-                <input type="date" value="">
-            </div>
-            <input data-aos="zoom-in" data-aos-delay="600" type="submit" value="Tìm Kiếm" class="btn">
-        </form>
-
-    </section>
+        @using (Html.BeginForm("SearchProduct", "Products"))
+        {
+            <form action="">
+                <div class="search-input">
+                    <div data-aos="zoom-in" data-aos-delay="150" class="inputBox">
+                        <span>Địa Điểm?</span>
+                        <input type="text" placeholder="Tên Địa Điểm" value="" name="Location">
+                        <div class="autocom-box">
+                            <li>Hà Nội</li>
+                            <li>Hải Phòng</li>
+                            <li>Hà Giang</li>
+                            <li>Phú Quốc</li>
+                            <li>Phú Thọ</li>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="300" class="inputBox">
+                    <span>Ngày Thuê?</span>
+                    <input type="date" value="" name="DateThue">
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="300" class="inputBox">
+                    <span>Ngày Trả?</span>
+                    <input type="date" value="" name="DateTra">
+                </div>
+                <input data-aos="zoom-in" data-aos-delay="600" type="submit" value="Tìm Kiếm" class="btn">
+            </form>
+        }
+        </section>
 
     <!-- booking form section ends -->
 
@@ -145,18 +155,7 @@
         </div>
 
     </section>
-    <!--<div class="banner">
 
-        <div class="content" data-aos="zoom-in-up" data-aos-delay="300">
-            <span>start your adventures</span>
-            <h3>Let's Explore This World</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum voluptatum praesentium amet quibusdam quam officia suscipit odio.</p>-->
-    <!-- <a href="#book-form" class="btn">book now</a> -->
-    <!--</div>
-
-    </div>-->
-    <!-- banner section ends -->
-    <!-- footer section starts  -->
 
     <section class="footer">
 
@@ -175,9 +174,9 @@
 
             <div class="box" data-aos="fade-up" data-aos-delay="300">
                 <h3>quick links</h3>
-                <a href="#home" class="links"> <i class="fas fa-arrow-right"></i> home </a>
-                <a href="#about" class="links"> <i class="fas fa-arrow-right"></i> about </a>
-                <a href="#destination" class="links"> <i class="fas fa-arrow-right"></i> destination </a>
+                <a href="#book-form" class="links"> <i class="fas fa-arrow-right"></i> Tìm Kiếm </a>
+                <a href="#destination" class="links"> <i class="fas fa-arrow-right"></i> Loại Phòng </a>
+                <a href="#gallery" class="links"> <i class="fas fa-arrow-right"></i> Khu Vực </a>
 
             </div>
 
@@ -189,12 +188,23 @@
 
 
     <!-- footer section ends -->
+    <!-- Bootstrap core JavaScript-->
+    <!-- Bootstrap core JavaScript-->
 
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Core plugin JavaScript-->
+    <script src="~/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
 
+    <!-- Custom scripts for all pages-->
+    @RenderSection("Scripts", required: false)
+    <script src="~/Content/js/suggestions.js"></script>
+    <script src="~/Content/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
     <script>
+
 
         AOS.init({
             duration: 800,

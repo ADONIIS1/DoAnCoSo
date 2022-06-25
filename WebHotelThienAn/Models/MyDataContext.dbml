@@ -26,6 +26,9 @@
       <Column Name="IDTaiKhoan" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="MaPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="TongTien" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TinhTrang" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NgayThue" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="NgayTra" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Association Name="Phong_HoaDon" Member="Phong" ThisKey="MaPhong" OtherKey="MaPhong" Type="Phong" IsForeignKey="true" />
       <Association Name="TaiKhoan_HoaDon" Member="TaiKhoan" ThisKey="IDTaiKhoan" OtherKey="IDTaiKhoan" Type="TaiKhoan" IsForeignKey="true" />
     </Type>
@@ -57,15 +60,6 @@
       <Association Name="LoaiPhong_Phong" Member="Phongs" ThisKey="IDLoaiPhong" OtherKey="IDLoaiPhong" Type="Phong" />
     </Type>
   </Table>
-  <Table Name="dbo.ResetPass" Member="ResetPasses">
-    <Type Name="ResetPass">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="maRS" Type="System.String" DbType="VarChar(32)" CanBeNull="true" />
-      <Column Name="ID_NguoiDung" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ThoiHan" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Association Name="TaiKhoan_ResetPass" Member="TaiKhoan" ThisKey="ID_NguoiDung" OtherKey="IDTaiKhoan" Type="TaiKhoan" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Phong" Member="Phongs">
     <Type Name="Phong">
       <Column Name="MaPhong" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -87,6 +81,15 @@
       <Association Name="LoaiPhong_Phong" Member="LoaiPhong" ThisKey="IDLoaiPhong" OtherKey="IDLoaiPhong" Type="LoaiPhong" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.ResetPass" Member="ResetPasses">
+    <Type Name="ResetPass">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="maRS" Type="System.String" DbType="VarChar(32)" CanBeNull="true" />
+      <Column Name="ID_NguoiDung" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ThoiHan" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="TaiKhoan_ResetPass" Member="TaiKhoan" ThisKey="ID_NguoiDung" OtherKey="IDTaiKhoan" Type="TaiKhoan" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.TaiKhoan" Member="TaiKhoans">
     <Type Name="TaiKhoan">
       <Column Name="IDTaiKhoan" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -104,20 +107,20 @@
       <Association Name="TinhTrang_TaiKhoan" Member="TinhTrang" ThisKey="maTinhTrang" OtherKey="maTinhTrang" Type="TinhTrang" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.TinhTrang" Member="TinhTrangs">
-    <Type Name="TinhTrang">
-      <Column Name="IDTinhTrang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="maTinhTrang" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="tenTinhTrang" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="TinhTrang_TaiKhoan" Member="TaiKhoans" ThisKey="maTinhTrang" OtherKey="maTinhTrang" Type="TaiKhoan" />
-    </Type>
-  </Table>
   <Table Name="dbo.TienNghi" Member="TienNghis">
     <Type Name="TienNghi">
       <Column Name="IDTN" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="TenTN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="AnhDaiDien" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="TienNghi_ChiTietTienNghi" Member="ChiTietTienNghis" ThisKey="IDTN" OtherKey="IDTN" Type="ChiTietTienNghi" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TinhTrang" Member="TinhTrangs">
+    <Type Name="TinhTrang">
+      <Column Name="IDTinhTrang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="maTinhTrang" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tenTinhTrang" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="TinhTrang_TaiKhoan" Member="TaiKhoans" ThisKey="maTinhTrang" OtherKey="maTinhTrang" Type="TaiKhoan" />
     </Type>
   </Table>
 </Database>

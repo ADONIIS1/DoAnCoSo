@@ -1,0 +1,244 @@
+﻿@model WebHotelThienAn.Models.Phong
+
+
+@{
+    ViewBag.Title = "Shopping";
+    Layout = null;
+}
+@using WebHotelThienAn.Models
+@{
+    TaiKhoan tk = (TaiKhoan)Session["Accouts"];
+}
+@using (Html.BeginForm())
+{
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shopping</title>
+        <link href="~/Content/booking/style.css" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/5188ba78a4.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <nav id="navBar" class="navbar-white">
+            <a href="@Url.Action("AllProducts", "Products")"><img src="~/Content/images/logothienan.png" class="logo"></a>
+
+
+            @if (Session["Email"] != null)
+            {
+
+
+                <div class="navbar1">
+                    <div class="nav_right">
+                        <ul>
+                            <li class="nr_li dd_main">
+
+                                <img src="~/Content/images/icons8_user_50px_9.png" />
+                                <div class="dd_menu">
+                                    <div class="dd_right">
+                                        <ul>
+                                            <a href="@Url.Action("UpdateInfo", "Accounts")">
+                                            <li>Hồ sơ cá nhân</li></a>
+                                            <a href="@Url.Action("ChangePass", "Accounts")">
+                                            <li>Đổi Mật Khẩu</li></a>
+                                            <a href="#">
+                                            <li>Phòng đã đặt</li></a>
+                                            <a href="@Url.Action("Logout", "Accounts")">
+                                            <li>Đăng xuất</li></a>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Accounts")" class="register-btn">Đăng Nhâp</a>
+            }
+            <i class="fa-solid fa-bars" onclick="togglebtn()"></i>
+        </nav>
+
+        <div class="item-flex">
+
+            <!--
+             - checkout section
+            -->
+            <section class="checkout">
+
+                <h2 class="section-heading">Thực Hiện Đặt Phòng</h2>
+
+                <div class="payment-form">
+
+
+
+                    <form action="#">
+
+                        <div class="cardholder-name">
+                            <label for="cardholder-name" class="label-default">Họ Tên</label>
+                            <input type="text" name="Hoten" id="cardholder-name" value="@tk.HoTen" class="input-default">
+                            <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.Name</div>
+                        </div>
+
+                        <div class="cardholder-name">
+                            <label for="cardholder-name" class="label-default">Email</label>
+                            <input type="email" name="email" id="cardholder-name"  value="@tk.Email"class="input-default">
+                            <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.email</div>
+                        </div>
+                        <div class="cardholder-name">
+                            <label for="cardholder-name" class="label-default">Địa Chỉ</label>
+                            <input type="text" name="location" id="cardholder-name" class="input-default">
+                            <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.DiaChi</div>
+                        </div>
+
+
+                        <div class="input-flex">
+                            <div class="cvv">
+                                <label for="cvv" class="label-default">Ngày Sinh  </label>
+                                <input type="date" name="Birthday" id="cvv" class="input-default">
+                                <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.NgaySinh</div>
+                            </div>
+                            <div class="cvv">
+                                <label for="cvv" class="label-default">Điện Thoại</label>
+                                <input type="number" name="Phone" id="cvv" class="input-default">
+                                <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.SDT</div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="cvv" style="margin-bottom: 50px;">
+                    <label for="cvv" class="label-default">Mức thanh toán</label>
+                    <div class="select">
+                        <select name="slt-1" id="slt-1">
+
+                            <option value="1" name="type">Thanh Toán 20%</option>
+                            <option value="2" name="type">Thanh Toán  50%</option>
+                            <option value="3" name="type">Thanh Toán  100%</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary">
+                    <b>Thanh Toán</b>
+
+                </button>
+
+            </section>
+
+
+            <!--
+              - cart section
+            -->
+            <section class="cart">
+
+                <div class="cart-item-box">
+
+                    <h2 class="section-heading">Đặt Phòng Của Bạn</h2>
+
+                    <div class="product-card">
+
+                        <div class="card">
+
+                            <div class="img-box">
+                                <img src="@Model.AnhDaiDien" alt="Green tomatoes" width="50px" class="product-img">
+                            </div>
+
+                            <div class="detail">
+
+                                <h4 class="product-name">@Model.TenPhong</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrapper">
+
+                    <div class="discount-token">
+
+                        <label for="discount-token" class="label-default" id="time">Từ ngày @ViewBag.datethue đến @ViewBag.datetra</label>
+                        <label for="discount-token" class="mumber"> Số Ngày: @ViewBag.SoNgayThue </label>
+
+                    </div>
+
+                    <div class="amount">
+
+                        <div class="subtotal">
+                            <span>Giá Phòng</span> <span>@String.Format("{0:0,0}", @Model.GiaPhong)<span id="subtotal">VNĐ</span></span>
+                        </div>
+
+
+
+                        <div class="total">
+                            <span>Tổng Cộng</span> <span>@String.Format("{0:0,0}", @ViewBag.TongTien) <span id="total">VNĐ</span></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <div class="footer">
+
+            <a href="https://facebook.com"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://youtuber.com"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://twitter.com"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://linkedin.com"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://instagram.com"><i class="fa-brands fa-instagram"></i></a>
+            <hr>
+
+        </div>
+
+        <script>
+            var navBar = document.getElementById("navBar");
+            function togglebtn() {
+                navBar.classList.toggle("hidemenu");
+            }
+            var dd_main = document.querySelector(".dd_main");
+
+            dd_main.addEventListener("click", function () {
+                this.classList.toggle("active");
+            })
+            const selected = document.querySelector(".selected");
+            const optionsContainer = document.querySelector(".options-container");
+            const optionsList = document.querySelectorAll(".option");
+            selected.addEventListener("click", () => {
+                optionsContainer.classList.toggle("active");
+            });
+
+            optionsList.forEach(o => {
+                o.addEventListener("click", () => {
+                    selected.innerHTML = o.querySelector("label").innerHTML;
+                    optionsContainer.classList.remove("active");
+                });
+            });
+            if ("@String.IsNullOrEmpty(tk.HoTen)" == "False") {
+                document.getElementsByName("Hoten")[0].value = "@tk.HoTen"
+            }
+            if ("@String.IsNullOrEmpty(tk.Email)" == "False") {
+                document.getElementsByName("email")[0].value = "@tk.Email"
+            }
+            if ("@String.IsNullOrEmpty(tk.DiaChi)" == "False") {
+                document.getElementsByName("location")[0].value = "@tk.DiaChi"
+            }
+            if ("@String.IsNullOrEmpty(tk.SDT)" == "False") {
+                document.getElementsByName("Phone")[0].value = "@tk.SDT"
+            }
+            if ("@String.IsNullOrEmpty(tk.NgaySinh.ToString())" == "False") {
+                document.getElementsByName("Birthday")[0].value = "@tk.NgaySinh.GetValueOrDefault().ToString("yyyy-MM-dd")"
+            } else {
+                document.getElementsByName("Birthday")[0].value = "2000-01-01"
+            }
+        </script>
+    </body>
+</html>
+}

@@ -128,10 +128,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\date.cs" />
+    <Compile Include="Models\HoaHon.cs" />
     <Compile Include="Models\Home.cs" />
     <Compile Include="Models\MyDataContext.designer.cs">
       <AutoGen>True</AutoGen>
@@ -141,6 +144,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\booking\style.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -217,6 +221,8 @@
     <Content Include="Content\images\tw.png" />
     <Content Include="Content\images\vila.jpg" />
     <Content Include="Content\images\VungTau.png" />
+    <Content Include="Content\js\script.js" />
+    <Content Include="Content\js\suggestions.js" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.bundle.js" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.js" />
@@ -2089,6 +2095,8 @@
     <Content Include="Views\Accounts\ResetPass.cshtml" />
     <Content Include="Views\Accounts\UpdateInfo.cshtml" />
     <Content Include="Views\Accounts\ChangePass.cshtml" />
+    <Content Include="Views\Booking\Checkout.cshtml" />
+    <Content Include="Views\Accounts\booking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

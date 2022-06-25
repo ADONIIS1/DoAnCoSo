@@ -3,80 +3,122 @@
     ViewBag.Title = "ProductDetail";
     Layout = "~/Views/Shared/LayoutListing.cshtml";
 }
+@{
+    var datethue = ViewBag.datethue;
+    var datetra = ViewBag.datetra;
 
-<div class="house-details">
-    <div class="house-title">
-        <h1>@Model.TenPhong</h1>
-        <div class="row">
-            <div>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star-half-stroke"></i>
-                <i class="far fa-star"></i>
-                <span>245 Review</span>
+}
+<script>
+         if ("@String.IsNullOrEmpty(datethue)" == "False") {
+             document.getElementsByName("datethue")[0].value = "@datethue"
+         }
+
+         if ("@String.IsNullOrEmpty(datetra)" == "False") {
+             document.getElementsByName("datetra")[0].value = "@datetra"
+         }
+         
+        function myfunction() {
+            var d1 = document.getElementsByName("datethue")[0].value;
+            var d2 = document.getElementsByName("datetra")[0].value;
+            const datengaythue = new Date(d1);
+            const datengaytra = new Date(d2);
+            if (datengaythue > datengaytra) {
+                document.getElementsByName("datethue").style.borderColer = "red";
+                document.getElementsByName("datetra").style.borderColer = "red";
+            }
+        }
+</script>
+
+@using (Html.BeginForm())
+{
+    <div class="house-details">
+        <div class="house-title">
+            <h1>@Model.TenPhong</h1>
+            <div class="row">
+                <div>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                    <i class="far fa-star"></i>
+                    <span>245 Review</span>
+                </div>
+                <div>
+                    <p>Địa Chỉ: @Model.Vitri</p>
+                </div>
             </div>
+        </div>
+        <div class="gallery">
+            <div class="gallery-img-1"><img src="~/Content/images/house-1.png"></div>
+            <div><img src="~/Content/images/house-2.png"></div>
+            <div><img src="~/Content/images/house-3.png"></div>
+            <div><img src="~/Content/images/house-4.png"></div>
+            <div><img src="~/Content/images/house-5.png"></div>
+        </div>
+        <div class="small-details">
+            <h2>@Model.KieuPhong.TenKieuPhong</h2>
+            @Html.Action("ShowTietIchPhong", "Products", new { MaP = Model.MaPhong })
+            <h4>@String.Format("{0:0,0}", @Model.GiaPhong) VNĐ   / Ngày</h4>
+        </div>
+        <hr class="line">
+
+        <div class="check-form">
+
             <div>
-                <p>Địa Chỉ: @Model.Vitri</p>
+
+                <label>Ngày vào</label>
+                <input type="date"  placeholder="Add date" name="datethue">
+
             </div>
+            <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.NgayThue</div>
+            <div>
+
+                <label>Ngày ra</label>
+                <input type="date" placeholder="Add date" name="datetra">
+
+            </div>
+            <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.NgaySinh</div>
+            <div class="guest-field">
+
+                <label>Số Người</label>
+                <input type="number" min="1" max="5" placeholder="Nhập số Người" name="songuoi">
+                <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.songuoi</div>
+            </div>
+            
+            <button type="submit" onclick="myfunction()">Đặt Phòng</button>
+
         </div>
-    </div>
-    <div class="gallery">
-        <div class="gallery-img-1"><img src="~/Content/images/house-1.png"></div>
-        <div><img src="~/Content/images/house-2.png"></div>
-        <div><img src="~/Content/images/house-3.png"></div>
-        <div><img src="~/Content/images/house-4.png"></div>
-        <div><img src="~/Content/images/house-5.png"></div>
-    </div>
-    <div class="small-details">
-        <h2>@Model.KieuPhong.TenKieuPhong</h2>
-        @Html.Action("ShowTietIchPhong", "Products", new { MaP = Model.MaPhong })
-        <h4>@String.Format("{0:0,0}", @Model.GiaPhong) VNĐ   / Ngày</h4>
-    </div>
-    <hr class="line">
-    <form class="check-form">
-        <div>
-            <label>Ngày Vào</label>
-            <input type="date" placeholder="Add date">
-        </div>
-        <div>
-            <label>Ngày Trả</label>
-            <input type="date" placeholder="Add date">
-        </div>
-        <div class="guest-field">
-            <label>Số Người</label>
-            <input type="text" placeholder="Nhập số Người">
-        </div>
-        <button type="submit">Đặt Phòng</button>
-    </form>
-    <ul class="details-list">
-        <li>
-            <i class="fas fa-home"></i>Entire Home
-            <span>Bạn sẽ có toàn bộ căn hộ cho bạn</span>
-        </li>
-        <li>
-            <i class="fas fa-paint-brush"></i>Entire Clean
-            <span>Máy chủ này đã cam kết thực hiện quy trình dọn dẹp của Thiên An</span>
-        </li>
-        <li>
-            <i class="fas fa-map-marker-alt"></i>Vị trí tuyệt vời
-            <span>90% khách gần đây đã đánh giá địa điểm này là 5 sao</span>
-        </li>
-        <li>
-            <i class="fas fa-heart"></i>Trải nghiệm đăng ký tuyệt vời
-            <span>100% khách gần đây đã đánh giá quá trình nhận phòng là 5 sao</span>
-        </li>
-    </ul>
-    <hr class="line">
-    <p class="home-desc">
-        @Model.MoTa
-    </p>
-    <hr class="line">
+        <ul class="details-list">
+            <li>
+                <i class="fas fa-home"></i>Entire Home
+                <span>Bạn sẽ có toàn bộ căn hộ cho bạn</span>
+            </li>
+            <li>
+                <i class="fas fa-paint-brush"></i>Entire Clean
+                <span>Máy chủ này đã cam kết thực hiện quy trình dọn dẹp của Thiên An</span>
+            </li>
+            <li>
+                <i class="fas fa-map-marker-alt"></i>Vị trí tuyệt vời
+                <span>90% khách gần đây đã đánh giá địa điểm này là 5 sao</span>
+            </li>
+            <li>
+                <i class="fas fa-heart"></i>Trải nghiệm đăng ký tuyệt vời
+                <span>100% khách gần đây đã đánh giá quá trình nhận phòng là 5 sao</span>
+            </li>
+        </ul>
+        <hr class="line">
+        <p class="home-desc">
+            @Model.MoTa
+        </p>
+        <hr class="line">
 
 
-    <div class="map">
-        <h3>Location on map</h3>
-        <iframe src="@Model.Location"></iframe>
-        <b>@Model.Vitri</b>
-        
+        <div class="map">
+            <h3>Location on map</h3>
+            <iframe src="@Model.Location"></iframe>
+            <b>@Model.Vitri</b>
+
+        </div>
     </div>
+}
+

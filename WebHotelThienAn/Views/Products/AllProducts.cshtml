@@ -4,6 +4,17 @@
     ViewBag.Title = "AllProducts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Scripts{
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams.get('thongbao'))
+        if (urlParams.get('thongbao') != null) {
+            document.querySelector('.toast-body').innerText = "🔔" + urlParams.get('thongbao')
+            $('.toast').toast('show')
+        }
+    </script>
+}
 
 <section class="destination" id="destination">
 
@@ -20,7 +31,7 @@
             {
                 <div class="box" data-aos="fade-up" data-aos-delay="150">
                     <div class="image">
-                        <img src="@item.url"/>
+                        <img src="@item.url" />
                     </div>
                     <div class="content">
                         <h3>@item.Ten</h3>
@@ -48,7 +59,7 @@
             if (item.l == "KhuVuc")
             {
                 <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
-                    <a href="@Url.Action("ProductWithArea","Products",new { idKhuVuc = item.IDHome})"><img src="@item.url" alt=""/></a>
+                    <a href="@Url.Action("ProductWithArea","Products",new { idKhuVuc = item.IDHome})"><img src="@item.url" alt="" /></a>
                     <span>@item.soluong Chỗ </span>
                     <h3>@item.Ten</h3>
                 </div>

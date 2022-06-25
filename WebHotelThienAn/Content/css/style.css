@@ -127,6 +127,7 @@ section {
 
             .header .navbar .dd_menu .dd_left li {
                 color: #222222;
+                list-style: none;
             }
 
         .header .navbar .dd_menu .dd_right {
@@ -135,7 +136,8 @@ section {
 
         .header .navbar .dd_menu li {
             margin-bottom: 10px;
-            color: #868686;
+            color: #fff;
+            list-style: none;
         }
 
         .header .navbar .dd_menu:before {
@@ -153,17 +155,10 @@ section {
 
     .header .navbar .dd_menu .dd_right li {
         font-size: 15px;
+        list-style: none;
     }
 
 
-       /* .header .profile img {
-            width: 50%;
-            top: 0;
-            position: absolute;
-            object-fit: cover;
-            left: 0;
-            height: 60%;
-        }*/
 
 
 .header .btn {
@@ -215,7 +210,7 @@ section {
 
 .book-form {
   width: 80%;
-  margin: 1rem auto;
+  margin: 15rem auto;
   margin-top: -5rem;
   background: #222;
   border-radius: 1rem;
@@ -568,3 +563,30 @@ section {
   }
 }
 /*# sourceMappingURL=style.css.map */
+.book-form .search-input .autocom-box {
+    position: absolute;
+    height: 100px;
+    width: 105px;
+    max-height: 280px;
+    font-size: 15px;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.autocom-box li {
+    list-style: none;
+    padding: 8px 12px;
+    color: #fff;
+    cursor: default;
+    border-radius: 10px;
+}
+
+    .autocom-box li:hover {
+        background: #29d9d5;
+    }
+
+.book-form .search-input.active .autocom-box {
+    opacity: 1;
+    pointer-events: auto;
+}

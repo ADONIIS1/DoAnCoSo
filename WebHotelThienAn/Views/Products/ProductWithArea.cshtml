@@ -3,73 +3,97 @@
     ViewBag.Title = "ProductWithArea";
     Layout = "~/Views/Shared/LayoutListing.cshtml";
 }
+@{
+    var datethue = ViewBag.datethue;
+    var datetra = ViewBag.datetra;
+} 
 
-<div class="container">
+    <div class="container">
 
-    <div class="list-container">
-        <form class="check-form">
-            <div>
-                <label>Check-in</label>
-                <input type="date" placeholder="Add date">
-            </div>
-            <div>
-                <label>Check-out</label>
-                <input type="date" placeholder="Add date">
-            </div>
-            <div class="guest-field">
-                <label>Guest</label>
-                <input type="text" placeholder="2 guest">
-            </div>
-           
-        </form>
-        <div class="left-col">
-            <p>@ViewBag.SoLuongPhong  số Phòng</p>
-            <h1>Các Phòng được đề xuất ở @ViewBag.TenKV</h1>
+        <div class="list-container">
+            <form class="check-form">
+                <div>
+                    <label>Ngày vào</label>
+                    <input type="date" placeholder="Add date" name="datethue">
+                </div>
+                <div>
+                    <label>Ngày ra</label>
+                    <input type="date" placeholder="Add date" name="datetra">
+                </div>
+            </form>
 
-            @foreach (var item in Model)
-            {
+            <div class="left-col">
+                <p>@ViewBag.SoLuongPhong  số Phòng</p>
+                <h1>Các Phòng được đề xuất ở @ViewBag.TenKV</h1>
 
-                <div class="house">
-                    <div class="house-img">
-                        <a href="@Url.Action("ProductDetail","Products",new { id = item.MaPhong})"><img src="@Url.Content(item.AnhDaiDien)"></a>
-                    </div>
-                    <div class="house-info">
-                        <p>@item.LoaiPhong.TenLoaiPhong ở @item.KhuVuc.TenKV</p>
-                        <h3>Phòng @item.KieuPhong.TenKieuPhong </h3>
-                        @Html.Action("ShowTietIchPhong", "Products", new { MaP = item.MaPhong })
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <i class="far fa-star"></i>
-                        <div class="house-price">
-                            <h4>@String.Format("{0:0,0}", item.GiaPhong) VNĐ  <span>/ Ngày </span> </h4>
+                @foreach (var item in Model)
+                {
+
+                    <div class="house">
+                        <div class="house-img">
+                            @if (@String.IsNullOrEmpty(datethue) == false || @String.IsNullOrEmpty(datetra) == false)
+                            {
+
+                                <a href="@Url.Action("ProductDetail", "Products", new { id = item.MaPhong, datethue = datethue, datetra = datetra })">
+                                    <img src="@Url.Content(item.AnhDaiDien)">
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("ProductDetail", "Products", new { id = item.MaPhong })">
+                                    <img src="@Url.Content(item.AnhDaiDien)">
+                                </a>
+                            }
+
+                        </div>
+                        <div class="house-info">
+                            <p>@item.LoaiPhong.TenLoaiPhong ở @item.KhuVuc.TenKV</p>
+                            <h3>Phòng @item.KieuPhong.TenKieuPhong </h3>
+                            @Html.Action("ShowTietIchPhong", "Products", new { MaP = item.MaPhong })
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                            <i class="far fa-star"></i>
+                            <div class="house-price">
+                                <h4>@String.Format("{0:0,0}", item.GiaPhong) VNĐ  <span>/ Ngày </span> </h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
 
-        <div class="right-col">
-            <div class="sidebar">
-                <h2>Tìm Kiếm</h2>
-                @Html.Action("ShowLoaiPhong", "Products", new { id = ViewBag.idKhuVuc })
+            <div class="right-col">
+                <div class="sidebar">
+                    <h2>Tìm Kiếm</h2>
+                    @Html.Action("ShowLoaiPhong", "Products", new { id = ViewBag.idKhuVuc })
+                </div>
             </div>
         </div>
+
+
+        <div class="pagination">
+            <img src="~/Content/images/arrow.png">
+            <span class="current">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+            <span> &middot; &middot; &middot; &middot; &middot; </span>
+            <span>20</span>
+            <img src="~/Content/images/arrow.png" class="right-arrow">
+
+        </div>
     </div>
+}
 
+    <script>
+         if ("@String.IsNullOrEmpty(datethue)" == "False") {
+             document.getElementsByName("datethue")[0].value = "@datethue"
+        }
 
-    <div class="pagination">
-        <img src="~/Content/images/arrow.png">
-        <span class="current">1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
-        <span> &middot; &middot; &middot; &middot; &middot; </span>
-        <span>20</span>
-        <img src="~/Content/images/arrow.png" class="right-arrow">
-
-    </div>
-</div>
+         if ("@String.IsNullOrEmpty(datetra)" == "False") {
+             document.getElementsByName("datetra")[0].value = "@datetra"
+         }
+    </script>
 

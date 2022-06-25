@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WebHotelThienAn.Models.HoaDon>
+@{
+    ViewBag.Title = "booking";
+    Layout = "~/Views/Shared/LayoutListing.cshtml";
+}
+
+<div class="table">
+
+    <table>
+
+        <tr>
+
+            <th>Mã Hóa Đơn</th>
+
+            <th>Ngày Lập</th>
+
+            <th>Tên Phòng</th>
+
+            <th>Ngày Nhận</th>
+
+            <th>Ngày Trả</th>
+
+            <th>Tình Trạng</th>
+
+            <th>Tổng Tiền</th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.IDHoaDon</td>
+
+                <td>@item.NgayLap.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+
+                <td>@item.Phong.TenPhong</td>
+
+                <td>@item.NgayThue.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+
+                <td>@item.NgayTra.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+                @if (item.TinhTrang == 1)
+                {
+                    <td>Đã Thanh Toán 20%</td>
+                }
+                else if (item.TinhTrang == 2)
+                {
+                    <td>Đã Thanh Toán 50%</td>
+                }
+                else
+                {
+                    <td>Đã Thanh Toán 100%</td>
+                }
+                <td>@item.TongTien</td>
+
+            </tr>
+        }
+
+
+    </table>
+</div>

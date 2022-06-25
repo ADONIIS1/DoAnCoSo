@@ -13,7 +13,7 @@
     <div class="col-lg-6">
         <div class="p-5">
             <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Cập Nhật Thông Tin<h1>
+                <h1 class="h4 text-gray-900 mb-4">Thông Tin Cá Nhân<h1>
             </div>
             @using (Html.BeginForm("UpdateInfo", "Accounts", FormMethod.Post, htmlAttributes: new { @class = "user" }))
             {
@@ -40,6 +40,7 @@
                 </div>
                 <div class="form-group">
                     <input type="date" class="form-control form-control-user" name="NgaySinh">
+                    <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.NgaySinh</div>
                 </div>
                 <div class="form-group">
                     <select class="form-control" name="GioiTinh">

@@ -3,14 +3,20 @@
     ViewBag.Title = "Quên Mật Khẩu";
     Layout = "~/Views/Shared/LayoutAccounts.cshtml";
 }
-
+@section Scripts{
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams.get('thongbao'))
+        if (urlParams.get('thongbao') != null) {
+            document.querySelector('.toast-body').innerText = "🔔" + urlParams.get('thongbao')
+            $('.toast').toast('show')
+        }
+    </script>
+}
 
 <div class="row">
-    @*<div class="col-lg-6 d-none d-lg-block bg-password-image">
-        <a href="@Url.Action("AllProducts", "Products")">
-            <img src="~/Content/images/anhlogo.png" />
-        </a>
-    </div>*@
+
     <div class="col-lg-6">
         <div class="p-5">
             <div class="text-center">
