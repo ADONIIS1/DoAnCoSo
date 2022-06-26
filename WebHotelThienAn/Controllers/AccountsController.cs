@@ -45,9 +45,9 @@ namespace WebHotelThienAn.Controllers
                 mailclient.Send(message);
                 //Program.Alert("Mật khẩu khôi phục đã gửi qua Mail", Form_Alert.enmType.Success);
             }
-                #pragma warning disable CS0168 // The variable 'ex' is declared but never used
-                            catch (Exception ex)
-                #pragma warning restore CS0168 // The variable 'ex' is declared but never used
+#pragma warning disable CS0168 // The variable 'ex' is declared but never used
+            catch (Exception ex)
+#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             { }
         }
         private string CreatePassword(int length)
@@ -102,7 +102,16 @@ namespace WebHotelThienAn.Controllers
                     {
                         return RedirectToAction("NotifForm", "Accounts", new { title = "Tài Khoản Chưa Xác Thực", msg = "Tài Khoản Bạn Chưa Được Xác Thực. Vui Lòng Kiểm Tra Mail" });
                     }
-                        Session["Accouts"] = nv;
+                    Session["ID"] = nv.IDTaiKhoan;
+                    Session["Email"] = nv.Email;
+                    Session["Name"] = nv.HoTen;
+                    Session["SDT"] = nv.SDT;
+                    Session["DiaChi"] = nv.DiaChi;
+                    if (String.IsNullOrEmpty(nv.MatKhau) || String.IsNullOrEmpty(nv.SDT) || String.IsNullOrEmpty(nv.DiaChi) || String.IsNullOrEmpty(nv.NgaySinh.ToString()) || String.IsNullOrEmpty(nv.GioiTinh.ToString()))
+                        return RedirectToAction("UpdateInfo", "Accounts");
+                    else
+                    {
+
                         Session["ID"] = nv.IDTaiKhoan;
                         Session["Email"] = nv.Email;
                         Session["Name"] = nv.HoTen;
@@ -110,16 +119,18 @@ namespace WebHotelThienAn.Controllers
                         Session["DiaChi"] = nv.DiaChi;
                         if (nv.Quyen == true)//Admin
                         {
+                            Session["Accounts"] = nv;
                             ViewBag.ThongBao = "Đăng nhập thành công admin";
-                            return RedirectToAction("ThongKe", "Admin", new { thongbao = ViewBag.ThongBao });
+                            return RedirectToAction("KhuVuc", "Admin");
                         }
                         if (nv.Quyen == false || nv.Quyen == null)
                         {
                             ViewBag.ThongBao = "Đăng nhập thành công";
-                            return RedirectToAction("AllProducts", "Products", new { thongbao = ViewBag.ThongBao });
+                            return RedirectToAction("AllProducts", "Products");
                         }
-                }
+                    }
 
+                }
                 else
                 {
                     ViewBag.ThongBao = "! Tài Khoản Và Mật Khẩu Không Hợp Lệ!";
@@ -192,6 +203,7 @@ namespace WebHotelThienAn.Controllers
                     user.HoTen = name;
                     user.MatKhau = MD5Hash(pass);
                     user.maTinhTrang = "block";
+                    user.Quyen = false;
                     db.TaiKhoans.InsertOnSubmit(user);
                     db.SubmitChanges();
 
@@ -201,7 +213,7 @@ namespace WebHotelThienAn.Controllers
                     reset.ThoiHan = "1";
                     db.ResetPasses.InsertOnSubmit(reset);
                     db.SubmitChanges();
-                    _SendMail(email, "Xác Nhận Tài Khoản ", "Link Xác Nhận Tài Khoản Của Bạn Là: " + host + "/Accounts/ActiveUser?token=" + maXN);
+                    _SendMail(email, "Xác Nhận Tài Khoản StoreFZF", "Link Xác Nhận Tài Khoản Của Bạn Là: " + host + "/Accounts/ActiveUser?token=" + maXN);
                     return RedirectToAction("NotifForm", "Accounts", new { title = "Tạo Tài Khoản Thành Công", msg = "Tài khoản của bạn đã được tạo thành công. Vui lòng check mail để xác nhận Mail!" });
                 }
             }
@@ -223,7 +235,7 @@ namespace WebHotelThienAn.Controllers
             string email = form["Email"].ToString();
             if (String.IsNullOrEmpty(email))
             {
-                ViewBag.ThongBao = "! Email Không Được Để Trống";
+                ViewBag.MatKhau = "! Email Không Được Để Trống";
             }
             else
             {
@@ -327,6 +339,8 @@ namespace WebHotelThienAn.Controllers
         {
             Session.Clear();
             FormsAuthentication.SignOut();
+            Session["Email"] = null;
+            Session["Accounts"] = null;
             return RedirectToAction("Login", "Accounts");
         }
 
@@ -453,12 +467,6 @@ namespace WebHotelThienAn.Controllers
             }
 
             return View();
-        }
-        public ActionResult booking()
-        {
-            TaiKhoan tk = (TaiKhoan)Session["Accouts"];
-            var hoadon = db.HoaDons.Where(p => p.IDTaiKhoan == tk.IDTaiKhoan).ToList();
-            return View(hoadon);
         }
     }
 }

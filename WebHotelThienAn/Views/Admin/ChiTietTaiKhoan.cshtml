@@ -1,0 +1,77 @@
+﻿@model WebHotelThienAn.Models.TaiKhoan
+
+@{
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<h2 style="text-align:center">Chi tiết tài khoản</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Họ tên
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            SDT
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Ngày sinh
+        </th>
+        <th>
+            Giới tính
+        </th>
+        <th>
+            Tình trạng
+        </th>
+        <th>
+            Quyền
+        </th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => Model.HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.SDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.DiaChi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.NgaySinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.GioiTinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.maTinhTrang)
+        </td>
+        <td>
+            @if (Model.Quyen == true)
+            {
+                <p>Quản lý</p>
+            }
+            else
+            {
+                <p>Người dùng</p>
+            }
+        </td>
+        <td>
+            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-blue" href="@Url.Action("ChiTietHoaDon", new { TaiKhoan = Model.IDTaiKhoan})">
+                <i class="fas fa-edit"></i>
+            </a>
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "ThongKeDoanhThu";
+    Layout = "~/Views/Shared/Admin.cshtml";
+    List<SelectListItem> a = new List<SelectListItem>()
+    {
+                new SelectListItem
+                {
+                    Value = "2019",
+                    Text = "2019"
+                },new SelectListItem
+                {
+                    Value = "2020",
+                    Text = "2020"
+                },new SelectListItem
+                {
+                    Value = "2021",
+                    Text = "2021"
+                },
+                new SelectListItem
+                {
+                    Value = "2022",
+                    Text = "2022"
+                }
+            };
+    ViewBag.nam = a;
+}
+
+
+<h2 style="text-align:center">Thống kê doanh thu</h2>
+<div class="form-group form-inline" style="text-align:center">
+    @Html.DropDownList("nam", (IEnumerable<SelectListItem>)ViewBag.nam, "Tất cả", htmlAttributes: new { @class = "w-1/2 bg-Black-100  border border-red-400 rounded py-2 px-2 mb-1 leading-tight focus:outline-none focus:bg-white-400" })
+    <input type="submit" name="submit" value="Thống kê" class="form-control search" />
+</div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<div class="container">
+    <div class="row">
+        <main class="bg-white-300 flex-1 p-3 overflow-hidden">
+            <figure class="highcharts-figure">
+                <div id="container" style="width:1100px ;height:500px"></div>
+                <p class="highcharts-description">
+
+                </p>
+            </figure>
+        </main>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".search").click(function () {
+            var e = document.getElementById("nam");
+            var nam = parseInt(e.options[e.selectedIndex].value);
+            $.getJSON("/Admin/ThongKeDoanhThu/?nam=" + nam + "", function (data) {
+
+            });
+            $.getJSON("/Admin/GetTong/?nam=" + nam + "", function (data) {
+                var Qts = [];
+                var Months = [];
+                for (var i = 0; i < data.length; i++) {
+                    Qts.push(data[i].count)
+                    Months.push(data[i].months)
+                }
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Doanh thu theo tháng'
+                    },
+                    xAxis: {
+                        categories: Months,
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Doanh thu thu được'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                        name: 'Thống Kê Theo Năm ',
+                        data: Qts
+                    }
+                    ]
+                });
+            });
+        })
+        $.getJSON("/Admin/ThongKeDoanhThu/?nam=" + nam + "", function (data) { })
+        $.getJSON("/Admin/GetTong/?nam=" + nam + "", function (data) {
+            var Qts = [];
+            var Months = [];
+            for (var i = 0; i < data.length; i++) {
+                Qts.push(data[i].count)
+                Months.push(data[i].months)
+            }
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Doanh thu theo tháng'
+                },
+                xAxis: {
+                    categories: Months,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Doanh thu thu được'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Thống Kê Theo Năm ',
+                    data: Qts
+                }
+                ]
+            });
+        });
+    });
+</script>
+

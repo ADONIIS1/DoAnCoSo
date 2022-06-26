@@ -1,0 +1,181 @@
+﻿@model  PagedList.IPagedList<WebHotelThienAn.Models.KhuVuc>
+@using PagedList.Mvc;
+
+@{
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<h2 style="text-align:center">Khu vực</h2>
+
+<p style="text-align:right">
+    @Html.ActionLink("Thêm khu vực mới", "ThemKhuVuc")
+</p>
+
+@using (Html.BeginForm("KhuVuc", "Admin"))
+{
+    <form>
+        <div class="form-group form-inline">
+            <input type="text" name="timkiem" value="@ViewBag.Keyword" class="form-control form-inline" />
+            <input type="submit" name="submit" value="Tìm kiếm" class="form-control" />
+        </div>
+    </form>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            Tên khu vực
+        </th>
+        <th>
+            Số lượng phòng
+        </th>
+        <th>
+            Tiêu đề
+        </th>
+        <th>
+            Ảnh đại diện
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="product @item.IDKhuVuc">
+            <td>
+                @Html.DisplayFor(modelItem => item.TenKV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuongPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TieuDe)
+            </td>
+            <td>
+                <img src="@item.AnhDaiDien" alt="@item.TenKV" style="width:200px;height:200px" />
+            </td>
+            <td>
+                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-blue" href="@Url.Action("SuaKhuVuc", new { id = item.IDKhuVuc})">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="ajax-fix-to-delete bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red" data-id="@item.IDKhuVuc">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    <div>
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) /
+        @Model.PageCount
+    </div>
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("KhuVuc", new
+        {
+            timkiem = @ViewBag.Keyword,
+            page = page
+        }))
+    </div>
+</div>
+
+<style>
+    .MenuTrang li {
+        display: inline;
+    }
+</style>
+<style type="text/css">
+    #mau-nut a {
+        clear: both;
+        background-color: orange;
+        color: snow;
+    }
+
+        #mau-nut a:hover {
+            background-color: darkcyan;
+            color: snow;
+        }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var maxLength = 100;
+        $(".show-read-more").each(function () {
+            var myStr = $(this).text();
+            if ($.trim(myStr).length > maxLength) {
+                var newStr = myStr.substring(0, maxLength);
+                var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+                $(this).empty().html(newStr);
+
+                $(this).append(' <a href="javascript:void(0);" class="read-more">đọc tiếp...</a>');
+
+                $(this).append('<span class="more-text">' + removedStr +
+                    '</span>');
+            }
+        });
+        $(".read-more").click(function () {
+            $(this).siblings(".more-text").contents().unwrap();
+            $(this).remove();
+        });
+    });
+</script>
+<style>
+    .show-read-more .more-text {
+        display: none;
+    }
+</style>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $(".ajax-fix-to-delete").click(function (e) {
+                if (confirm('Bạn có chắc xóa khu vực này không ?') == true) {
+                    e.preventDefault();
+                    var btn = $(this);
+                    var id = btn.data("id");
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Admin/XoaKhuVuc',
+                        data: {
+                            id: btn.data("id"),
+                        },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            if (data.result == true) {
+                                var row = document.getElementById('product ' + id)
+                                row.style.display = "none";
+                                toastr.options =
+                                {
+                                    "closeButton": true,
+                                    "progressBar": true
+                                }
+
+                                toastr.success("Bạn vừa xóa khu vực", "Thông Báo");
+                            }
+                            else {
+                                toastr.options =
+                                {
+                                    "closeButton": true,
+                                    "progressBar": true
+                                }
+                                toastr.error("Bạn không thể xóa khu vực này", "Thông Báo");
+                            }
+
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+                }
+
+            });
+        });
+
+    </script>
+}

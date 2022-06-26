@@ -36,6 +36,9 @@ namespace WebHotelThienAn.Models
     partial void InsertChiTietTienNghi(ChiTietTienNghi instance);
     partial void UpdateChiTietTienNghi(ChiTietTienNghi instance);
     partial void DeleteChiTietTienNghi(ChiTietTienNghi instance);
+    partial void InsertTinhTrang(TinhTrang instance);
+    partial void UpdateTinhTrang(TinhTrang instance);
+    partial void DeleteTinhTrang(TinhTrang instance);
     partial void InsertHoaDon(HoaDon instance);
     partial void UpdateHoaDon(HoaDon instance);
     partial void DeleteHoaDon(HoaDon instance);
@@ -60,13 +63,10 @@ namespace WebHotelThienAn.Models
     partial void InsertTienNghi(TienNghi instance);
     partial void UpdateTienNghi(TienNghi instance);
     partial void DeleteTienNghi(TienNghi instance);
-    partial void InsertTinhTrang(TinhTrang instance);
-    partial void UpdateTinhTrang(TinhTrang instance);
-    partial void DeleteTinhTrang(TinhTrang instance);
     #endregion
 		
 		public MyDataContextDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["WebKhachSanConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["WebKhachSanConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -108,6 +108,14 @@ namespace WebHotelThienAn.Models
 			get
 			{
 				return this.GetTable<ChiTietTienNghi>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TinhTrang> TinhTrangs
+		{
+			get
+			{
+				return this.GetTable<TinhTrang>();
 			}
 		}
 		
@@ -172,14 +180,6 @@ namespace WebHotelThienAn.Models
 			get
 			{
 				return this.GetTable<TienNghi>();
-			}
-		}
-		
-		public System.Data.Linq.Table<TinhTrang> TinhTrangs
-		{
-			get
-			{
-				return this.GetTable<TinhTrang>();
 			}
 		}
 	}
@@ -572,6 +572,144 @@ namespace WebHotelThienAn.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TinhTrang")]
+	public partial class TinhTrang : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IDTinhTrang;
+		
+		private string _maTinhTrang;
+		
+		private string _tenTinhTrang;
+		
+		private EntitySet<TaiKhoan> _TaiKhoans;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDTinhTrangChanging(int value);
+    partial void OnIDTinhTrangChanged();
+    partial void OnmaTinhTrangChanging(string value);
+    partial void OnmaTinhTrangChanged();
+    partial void OntenTinhTrangChanging(string value);
+    partial void OntenTinhTrangChanged();
+    #endregion
+		
+		public TinhTrang()
+		{
+			this._TaiKhoans = new EntitySet<TaiKhoan>(new Action<TaiKhoan>(this.attach_TaiKhoans), new Action<TaiKhoan>(this.detach_TaiKhoans));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDTinhTrang", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int IDTinhTrang
+		{
+			get
+			{
+				return this._IDTinhTrang;
+			}
+			set
+			{
+				if ((this._IDTinhTrang != value))
+				{
+					this.OnIDTinhTrangChanging(value);
+					this.SendPropertyChanging();
+					this._IDTinhTrang = value;
+					this.SendPropertyChanged("IDTinhTrang");
+					this.OnIDTinhTrangChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_maTinhTrang", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string maTinhTrang
+		{
+			get
+			{
+				return this._maTinhTrang;
+			}
+			set
+			{
+				if ((this._maTinhTrang != value))
+				{
+					this.OnmaTinhTrangChanging(value);
+					this.SendPropertyChanging();
+					this._maTinhTrang = value;
+					this.SendPropertyChanged("maTinhTrang");
+					this.OnmaTinhTrangChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tenTinhTrang", DbType="NVarChar(50)")]
+		public string tenTinhTrang
+		{
+			get
+			{
+				return this._tenTinhTrang;
+			}
+			set
+			{
+				if ((this._tenTinhTrang != value))
+				{
+					this.OntenTinhTrangChanging(value);
+					this.SendPropertyChanging();
+					this._tenTinhTrang = value;
+					this.SendPropertyChanged("tenTinhTrang");
+					this.OntenTinhTrangChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TinhTrang_TaiKhoan", Storage="_TaiKhoans", ThisKey="maTinhTrang", OtherKey="maTinhTrang")]
+		public EntitySet<TaiKhoan> TaiKhoans
+		{
+			get
+			{
+				return this._TaiKhoans;
+			}
+			set
+			{
+				this._TaiKhoans.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TaiKhoans(TaiKhoan entity)
+		{
+			this.SendPropertyChanging();
+			entity.TinhTrang = this;
+		}
+		
+		private void detach_TaiKhoans(TaiKhoan entity)
+		{
+			this.SendPropertyChanging();
+			entity.TinhTrang = null;
 		}
 	}
 	
@@ -2591,144 +2729,6 @@ namespace WebHotelThienAn.Models
 		{
 			this.SendPropertyChanging();
 			entity.TienNghi = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TinhTrang")]
-	public partial class TinhTrang : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IDTinhTrang;
-		
-		private string _maTinhTrang;
-		
-		private string _tenTinhTrang;
-		
-		private EntitySet<TaiKhoan> _TaiKhoans;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDTinhTrangChanging(int value);
-    partial void OnIDTinhTrangChanged();
-    partial void OnmaTinhTrangChanging(string value);
-    partial void OnmaTinhTrangChanged();
-    partial void OntenTinhTrangChanging(string value);
-    partial void OntenTinhTrangChanged();
-    #endregion
-		
-		public TinhTrang()
-		{
-			this._TaiKhoans = new EntitySet<TaiKhoan>(new Action<TaiKhoan>(this.attach_TaiKhoans), new Action<TaiKhoan>(this.detach_TaiKhoans));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDTinhTrang", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int IDTinhTrang
-		{
-			get
-			{
-				return this._IDTinhTrang;
-			}
-			set
-			{
-				if ((this._IDTinhTrang != value))
-				{
-					this.OnIDTinhTrangChanging(value);
-					this.SendPropertyChanging();
-					this._IDTinhTrang = value;
-					this.SendPropertyChanged("IDTinhTrang");
-					this.OnIDTinhTrangChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_maTinhTrang", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string maTinhTrang
-		{
-			get
-			{
-				return this._maTinhTrang;
-			}
-			set
-			{
-				if ((this._maTinhTrang != value))
-				{
-					this.OnmaTinhTrangChanging(value);
-					this.SendPropertyChanging();
-					this._maTinhTrang = value;
-					this.SendPropertyChanged("maTinhTrang");
-					this.OnmaTinhTrangChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tenTinhTrang", DbType="NVarChar(50)")]
-		public string tenTinhTrang
-		{
-			get
-			{
-				return this._tenTinhTrang;
-			}
-			set
-			{
-				if ((this._tenTinhTrang != value))
-				{
-					this.OntenTinhTrangChanging(value);
-					this.SendPropertyChanging();
-					this._tenTinhTrang = value;
-					this.SendPropertyChanged("tenTinhTrang");
-					this.OntenTinhTrangChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TinhTrang_TaiKhoan", Storage="_TaiKhoans", ThisKey="maTinhTrang", OtherKey="maTinhTrang")]
-		public EntitySet<TaiKhoan> TaiKhoans
-		{
-			get
-			{
-				return this._TaiKhoans;
-			}
-			set
-			{
-				this._TaiKhoans.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_TaiKhoans(TaiKhoan entity)
-		{
-			this.SendPropertyChanging();
-			entity.TinhTrang = this;
-		}
-		
-		private void detach_TaiKhoans(TaiKhoan entity)
-		{
-			this.SendPropertyChanging();
-			entity.TinhTrang = null;
 		}
 	}
 }

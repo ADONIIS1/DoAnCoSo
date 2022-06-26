@@ -1,0 +1,104 @@
+﻿@model IEnumerable<WebHotelThienAn.Models.HoaDon>
+@{
+
+    ViewBag.TongSL = Model.Count();
+}
+<style>
+    .modal {
+        text-align: left;
+        margin-left: 185px;
+        margin-top: 20px
+    }
+
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .modal-content {
+        width: 1200px;
+    }
+</style>
+<div id="DetailsDH" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" id="Body">
+            <div class="modal-header">
+                <h2 class="modal-title" style="color :black;font-family:Arial">Chi tiết hóa đơn</h2>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr class="text-dark">
+                            <th>Mã hóa đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Phòng</th>
+                            <th>Ngày lập</th>
+                            <th>Ngày thuê</th>
+                            <th>Ngày trả</th>
+                            <th>Tình trạng</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (var item in Model)
+                        {
+                            @Html.HiddenFor(p => item.IDHoaDon)
+                            <tr>
+                                <td>
+                                    <h3 class="text-dark">@item.IDHoaDon</h3>
+                                </td>
+                                <td>
+                                    <h3 class="text-dark">@item.TaiKhoan.HoTen</h3>
+                                </td>
+                                <td>
+                                    <h3 class="text-dark">@item.Phong.TenPhong</h3>
+                                </td>
+
+                                <td>
+                                    <h3 class="text-dark">@item.NgayLap</h3>
+                                </td>
+                                <td>
+                                    <h3 class="text-dark">@item.NgayThue</h3>
+                                </td>
+                                <td>
+                                    <h3 class="text-dark">@item.NgayTra</h3>
+                                </td>
+                                <td>
+                                    @if (item.TinhTrang == 1)
+                                    {
+                                        <p>20%</p>
+                                    }
+                                    else if (item.TinhTrang == 2)
+                                    {
+                                        <p>50%</p>
+                                    }
+                                    else
+                                    {
+                                        <p>100%</p>
+                                    }
+                                </td>
+                                <td>
+                                    <h3 class="text-dark">@item.TongTien</h3>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="row justify-content-center">
+                    <div class="cart-total mb-3">
+                        <p class="d-flex total-price">
+                            <h1 style="text-align:center;color:aqua">Chúc bạn có trải nghiệm vui vẻ</h1>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

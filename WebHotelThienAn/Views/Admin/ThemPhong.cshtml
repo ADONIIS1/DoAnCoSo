@@ -1,0 +1,127 @@
+﻿@model WebHotelThienAn.Models.Phong
+
+@{
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<h2 style="text-align:center">Thêm phòng</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <p style="font-style: normal; font-size: 20px; color: darkturquoise">Tên phòng</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TenPhong, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenPhong, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p style="font-style: normal; font-size: 20px; color: darkturquoise">Giá</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GiaPhong, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GiaPhong, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <p style="font-style: normal; font-size: 20px; color: darkturquoise">Mô tả</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <p style="font-style: normal; font-size: 20px; color: darkturquoise">Vị trí</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Vitri, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Vitri, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <form>
+            <div class="form-group form-inline">
+                <div>
+                    <p style="font-style: normal; font-size: 20px; color: darkturquoise">Khu vực</p>
+                    @Html.DropDownList("IDKhuVuc", null, null, htmlAttributes: new { @class = "appearance-none block w-full bg-gray-200  border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" })
+                </div>
+                <p class="text-red-500 text-xs italic" style="margin-top:0px">@Html.ValidationMessageFor(model => model.IDKhuVuc)</p>
+                <div>
+                    <p style="font-style: normal; font-size: 20px; color: darkturquoise">Loại phòng</p>
+                    @Html.DropDownList("IDLoaiPhong", null, null, htmlAttributes: new { @class = "appearance-none block w-full bg-gray-200  border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" })
+                </div>
+                <p class="text-red-500 text-xs italic" style="margin-top:0px">@Html.ValidationMessageFor(model => model.IDLoaiPhong)</p>
+                <div>
+                    <p style="font-style: normal; font-size: 20px; color: darkturquoise">Kiểu phòng</p>
+                    @Html.DropDownList("IDKieuPhong", null, null, htmlAttributes: new { @class = "appearance-none block w-full bg-gray-200  border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" })
+                </div>
+                <p class="text-red-500 text-xs italic" style="margin-top:0px">@Html.ValidationMessageFor(model => model.IDKieuPhong)</p>
+            </div>
+        </form>
+
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AnhDaiDien, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AnhDaiDien, "", new { @class = "text-danger" })
+                <input type="file" name="fileUpload" id="fileUpload" accept="image/*"
+                       style="display:none;" />
+                <input type="button" id="btnUpload" value="Chọn" class="btn btn-success" />
+                <img src="" alt="Hình ảnh" id="pictureUpload" style="width:200px;height:200px" />
+            </div>
+        </div>
+        @section upload
+{
+            <script>
+            $(function () {
+                $('#btnUpload').click(function () {
+                    $('#fileUpload').trigger('click');
+                });
+            });
+            $('#fileUpload').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $('#fileUpload').get(0);
+                    var files = fileUpload.files;
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '/Admin/ProcessUpload',
+                            contentType: false,
+                            processData: false,
+                            data: formData,
+                            success: function (urlImage) {
+
+                                $('#pictureUpload').attr('src', urlImage);
+                                $('#AnhDaiDien').val(urlImage);
+                            },
+                            error: function (err) {
+                                alert('Error ', err.statusText);
+                            }
+                        });
+                }
+            });
+            </script>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm" class="btn btn-default" />| hoặc |
+                @Html.ActionLink("Quay lại", "Phong")
+            </div>
+        </div>
+    </div>
+}
+
+
