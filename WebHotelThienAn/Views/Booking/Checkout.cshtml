@@ -80,18 +80,18 @@
 
                         <div class="cardholder-name">
                             <label for="cardholder-name" class="label-default">Họ Tên</label>
-                            <input type="text" name="Hoten" id="cardholder-name" value="@tk.HoTen" class="input-default">
+                            <input type="text" name="Hoten" id="cardholder-name"  value ="@tk.HoTen"class="input-default">
                             <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.Name</div>
                         </div>
 
                         <div class="cardholder-name">
                             <label for="cardholder-name" class="label-default">Email</label>
-                            <input type="email" name="email" id="cardholder-name"  value="@tk.Email"class="input-default">
+                            <input type="email" name="email" id="cardholder-name" value="@tk.Email" class="input-default">
                             <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.email</div>
                         </div>
                         <div class="cardholder-name">
                             <label for="cardholder-name" class="label-default">Địa Chỉ</label>
-                            <input type="text" name="location" id="cardholder-name" class="input-default">
+                            <input type="text" name="location" id="cardholder-name" value="@tk.DiaChi" class="input-default">
                             <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.DiaChi</div>
                         </div>
 
@@ -99,12 +99,12 @@
                         <div class="input-flex">
                             <div class="cvv">
                                 <label for="cvv" class="label-default">Ngày Sinh  </label>
-                                <input type="date" name="Birthday" id="cvv" class="input-default">
+                                <input type="date" name="Birthday" id="cvv" value="@tk.NgaySinh.GetValueOrDefault().ToString("yyyy-MM-dd")" class="input-default">
                                 <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.NgaySinh</div>
                             </div>
                             <div class="cvv">
                                 <label for="cvv" class="label-default">Điện Thoại</label>
-                                <input type="number" name="Phone" id="cvv" class="input-default">
+                                <input type="number" name="Phone" id="cvv" value="@tk.SDT" class="input-default">
                                 <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.SDT</div>
                             </div>
                         </div>
@@ -123,7 +123,17 @@
                         </select>
                     </div>
                 </div>
+                <div class="cvv" style="margin-bottom: 50px;">
+                    <label for="cvv" class="label-default">Chọn Phương Thức Thanh toán</label>
+                    <div class="select">
+                        <select name="slt-2" id="slt-2">
 
+                            <option value="1" name="type">PadPay</option>
+                            <option value="2" name="type">Momo</option>
+
+                        </select>
+                    </div>
+                </div>
                 <button class="btn btn-primary">
                     <b>Thanh Toán</b>
 
@@ -221,23 +231,24 @@
                     optionsContainer.classList.remove("active");
                 });
             });
-            if ("@String.IsNullOrEmpty(tk.HoTen)" == "False") {
-                document.getElementsByName("Hoten")[0].value = "@tk.HoTen"
-            }
-            if ("@String.IsNullOrEmpty(tk.Email)" == "False") {
-                document.getElementsByName("email")[0].value = "@tk.Email"
-            }
-            if ("@String.IsNullOrEmpty(tk.DiaChi)" == "False") {
-                document.getElementsByName("location")[0].value = "@tk.DiaChi"
-            }
-            if ("@String.IsNullOrEmpty(tk.SDT)" == "False") {
-                document.getElementsByName("Phone")[0].value = "@tk.SDT"
-            }
-            if ("@String.IsNullOrEmpty(tk.NgaySinh.ToString())" == "False") {
-                document.getElementsByName("Birthday")[0].value = "@tk.NgaySinh.GetValueOrDefault().ToString("yyyy-MM-dd")"
-            } else {
-                document.getElementsByName("Birthday")[0].value = "2000-01-01"
-            }
+             if ("@String.IsNullOrEmpty(tk.HoTen)" == "False") {
+                document.getElementsByName("Hoten").value = "@tk.HoTen"
+                }
+                if ("@String.IsNullOrEmpty(tk.Email)" == "False") {
+                document.getElementsByName("email").value = "@tk.Email"
+                }
+                if ("@String.IsNullOrEmpty(tk.DiaChi)" == "False") {
+                document.getElementsByName("location").value = "@tk.DiaChi"
+                }
+                if ("@String.IsNullOrEmpty(tk.SDT)" == "False") {
+                document.getElementsByName("Phone").value = "@tk.SDT"
+                }
+                if ("@String.IsNullOrEmpty(tk.NgaySinh.ToString())" == "False") {
+                document.getElementsByName("Birthday").value = "@tk.NgaySinh.GetValueOrDefault().ToString("yyyy-MM-dd")"
+                } else {
+                document.getElementsByName("Birthday").value = "2000-01-01"
+                }
+
         </script>
     </body>
 </html>

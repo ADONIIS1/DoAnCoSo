@@ -17,8 +17,9 @@ namespace WebHotelThienAn.Controllers
 
         public int GetSoNgayThue(DateTime ngaythue, DateTime ngaytra)
         {
-            int SoNgay;
-            SoNgay = ngaytra.Day - ngaythue.Day;
+            int SoNgay = 1;
+            TimeSpan time = ngaytra - ngaythue;
+            SoNgay = time.Days;
             return SoNgay;
         }
 
@@ -39,17 +40,32 @@ namespace WebHotelThienAn.Controllers
             ViewBag.SoNgayThue = GetSoNgayThue(ngaythue, ngaytra);
             ViewBag.datethue = ngaythue.ToString("dd-MM-yyyy");
             ViewBag.datetra = ngaytra.ToString("dd-MM-yyyy");
+            
             ViewBag.TongTien = GetTongTien(idPhong, ngaythue, ngaytra);
-
+          
             Session["ngayThue"] = datethue;
             Session["ngayTra"] = datetra;
             Session["idphong"] = idPhong;
+            int Songay = GetSoNgayThue(ngaythue, ngaytra);
             if (Session["Accouts"] == null || Session["Accouts"].ToString() == "")
             {
                 return RedirectToAction("Login", "Accounts");
             }
-      
+            Phongdat pd;
+
             Phong phong = data.Phongs.Where(p => p.MaPhong == idPhong).First();
+            if (Session["Phongdat"] == null)
+            {
+                pd = new Phongdat();
+
+                pd.phong = phong;
+                pd.SoNgay = Songay;
+               // pd.MucThanhToan = int.Parse(tinhtrang);
+                Session["Phongdat"] = pd;
+
+            }
+           
+
             return View(phong);
 
         }
@@ -83,14 +99,34 @@ namespace WebHotelThienAn.Controllers
     
             string DiaChi = form["location"];
             string email1 = form["email"];
-
+            var tinhtrang = form["slt-1"];
             var datethue = Session["ngayThue"];
             var datetra = Session["ngayTra"];
-
+            var thanhtoan = form["slt-2"];
+            int PTTT = int.Parse(thanhtoan);
             var idphong = Session["idphong"];
             DateTime ngaythue = DateTime.Parse((string)datethue);
             DateTime ngaytra = DateTime.Parse((string)datetra);
-            if (String.IsNullOrEmpty(Name))
+          
+            int Songay = GetSoNgayThue(ngaythue, ngaytra);
+            ViewBag.SoNgayThue = GetSoNgayThue(ngaythue, ngaytra);
+            ViewBag.datethue = ngaythue.ToString("dd-MM-yyyy");
+            ViewBag.datetra = ngaytra.ToString("dd-MM-yyyy");
+            ViewBag.TongTien = GetTongTien((int?)idphong, ngaythue, ngaytra);
+            Phong phong = data.Phongs.Where(p => p.MaPhong == (int)idphong).First();
+            hoadon hd1;
+            if (Session["hoadon"] == null)
+            {
+                hd1 = new hoadon();
+                hd1.tintrang = int.Parse(tinhtrang);
+                hd1.ngaythue = ngaythue;
+                hd1.ngaytra = ngaytra;
+                hd1.idphong = (int)idphong;
+                hd1.tongtien = GetTongTien((int?)idphong, ngaythue, ngaytra);
+                Session["hoadon"] = hd1;
+            }
+
+            else if (String.IsNullOrEmpty(Name))
                 ViewBag.Name = "! Họ Và Tên Không Được Để Trống";
             else if (String.IsNullOrEmpty(SDT))
                 ViewBag.SDT = "! Số Điện Thoại Không Được Để Trống";
@@ -104,10 +140,19 @@ namespace WebHotelThienAn.Controllers
                 ViewBag.SDT = "! Bạn Phải Nhập Số Điện Thoại Chính Xác";
             else
             {
-                HoaDon hd = new HoaDon();
+                if(PTTT == 2)
+                {
+                    return RedirectToAction("PaymentWithMomo", "Payment");
+                }
+                else
+                {
+                    return RedirectToAction("PaymentWithPaypal", "Payment");
+                }
+
+                var hd = new HoaDon();
                 hd.IDTaiKhoan = tk.IDTaiKhoan;
                 hd.NgayLap = DateTime.Now;
-                var tinhtrang = form["slt-1"];
+                
                 hd.TinhTrang = int.Parse(tinhtrang);
                 hd.NgayThue = ngaythue;
                 hd.MaPhong = (int?)idphong;
@@ -118,14 +163,7 @@ namespace WebHotelThienAn.Controllers
                 _SendMail(tk.Email, "Đặt Phòng Thành Công", "Bạn Đã Đặt Phòng Thành Công lúc " + DateTime.Now.ToString("dd/MM/yyyy - HH:mm"));
                 return RedirectToAction("NotifForm", "Accounts", new { title = "Thanh Toán Thành Công", msg = "Vui lòng check mail để xác nhận Mail!" });
             }
-
            
-            
-            ViewBag.SoNgayThue = GetSoNgayThue(ngaythue, ngaytra);
-            ViewBag.datethue = ngaythue.ToString("dd-MM-yyyy");
-            ViewBag.datetra = ngaytra.ToString("dd-MM-yyyy");
-            ViewBag.TongTien = GetTongTien((int?)idphong, ngaythue, ngaytra);
-            Phong phong = data.Phongs.Where(p => p.MaPhong == (int)idphong).First();
             return View(phong);
 
         }

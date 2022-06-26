@@ -75,33 +75,33 @@
 
 @section Scripts{
     <script>
-    function validate(evt) {
-        var theEvent = evt || window.event;
+        function validate(evt) {
+            var theEvent = evt || window.event;
 
-        // Handle paste
-        if (theEvent.type === 'paste') {
-            key = event.clipboardData.getData('text/plain');
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+                // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if (!regex.test(key)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+
+        if ("@String.IsNullOrEmpty(Model.GioiTinh)" == "False") {
+            document.getElementsByName("GioiTinh")[0].value = "@Model.GioiTinh"
+        }
+
+        if ("@String.IsNullOrEmpty(Model.NgaySinh.ToString())" == "False") {
+            document.getElementsByName("NgaySinh")[0].value = "@Model.NgaySinh.GetValueOrDefault().ToString("yyyy-MM-dd")"
         } else {
-            // Handle key press
-            var key = theEvent.keyCode || theEvent.which;
-            key = String.fromCharCode(key);
+            document.getElementsByName("NgaySinh")[0].value = "2000-01-01"
         }
-        var regex = /[0-9]|\./;
-        if (!regex.test(key)) {
-            theEvent.returnValue = false;
-            if (theEvent.preventDefault) theEvent.preventDefault();
-        }
-    }
-
-    if ("@String.IsNullOrEmpty(@Model.GioiTinh)" == "False") {
-        document.getElementsByName("GioiTinh")[0].value = "@Model.GioiTinh"
-    }
-
-    if ("@String.IsNullOrEmpty(Model.NgaySinh.ToString())" == "False") {
-        document.getElementsByName("NgaySinh")[0].value = "@Model.NgaySinh.GetValueOrDefault().ToString("yyyy-MM-dd")"
-    } else {
-        document.getElementsByName("NgaySinh")[0].value = "2000-01-01"
-    }
     </script>
 }
 

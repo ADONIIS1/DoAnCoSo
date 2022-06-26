@@ -330,3 +330,5 @@ E:\doanmoinhat\DoAnCoSo\WebHotelThienAn\obj\Debug\WebHotelThienAn.csproj.CoreCom
 E:\doanmoinhat\DoAnCoSo\WebHotelThienAn\obj\Debug\WebHotelThienAn.csproj.CopyComplete
 E:\doanmoinhat\DoAnCoSo\WebHotelThienAn\obj\Debug\WebHotelThienAn.dll
 E:\doanmoinhat\DoAnCoSo\WebHotelThienAn\obj\Debug\WebHotelThienAn.pdb
+E:\doanmoinhat\DoAnCoSo\WebHotelThienAn\bin\PayPal.dll
+E:\doanmoinhat\DoAnCoSo\WebHotelThienAn\bin\PayPal.xml

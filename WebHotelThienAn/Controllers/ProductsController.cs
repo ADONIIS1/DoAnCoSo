@@ -95,6 +95,13 @@ namespace WebHotelThienAn.Controllers
 #pragma warning restore CS0168 // The variable 'ex' is declared but never used
             { }
         }
+        public int GetSoNgayThue(DateTime ngaythue, DateTime ngaytra)
+        {
+            int SoNgay = 1;
+            TimeSpan time = ngaytra - ngaythue;
+            SoNgay = time.Days;
+            return SoNgay;
+        }
         [HttpGet]
         public ActionResult ProductDetail(int? id, string datethue, string datetra)
         {
@@ -117,18 +124,28 @@ namespace WebHotelThienAn.Controllers
 
             ViewBag.datethue = DateThue;
             ViewBag.datetra = DateTra;
-
             if (String.IsNullOrEmpty(DateThue))
                 ViewBag.NgayThue = "! Ngày Thuê Trống";
             else if (String.IsNullOrEmpty(DateTra))
                 ViewBag.NgaySinh = "! Ngày Trả Trống";
-            else if (String.IsNullOrEmpty(songuoi))
-                ViewBag.songuoi = "! Số Người Trống";
-            else
+            else if (!String.IsNullOrEmpty(DateThue) && !String.IsNullOrEmpty(DateTra))
             {
-                return RedirectToAction("Checkout", "Booking", new { idPhong = id1, datethue = DateThue, datetra = DateTra });
-            }
+                DateTime ngaythue = DateTime.Parse((string)DateThue);
+                DateTime ngaytra = DateTime.Parse((string)DateTra);
 
+                int songaythue = GetSoNgayThue(ngaythue, ngaytra);
+                if (songaythue <= 0)
+                {
+                        ViewBag.datetra = DateThue;
+                        ViewBag.ngaylon = "Ngày thuê Không Lớn hơn ngày trả";
+                }
+                else if (String.IsNullOrEmpty(songuoi))
+                    ViewBag.songuoi = "! Số Người Trống";
+                else
+                {
+                    return RedirectToAction("Checkout", "Booking", new { idPhong = id1, datethue = DateThue, datetra = DateTra });
+                }
+            }
             return View(D_SanPham);
         }
         public ActionResult ShowLoaiPhong(int? id)
