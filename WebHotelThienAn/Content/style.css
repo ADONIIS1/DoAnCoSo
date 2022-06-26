@@ -866,7 +866,7 @@ nav.navbar-white .active::after{
     }
 
     .navbar-white .navbar1 .dd_menu li {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         color: #040404;
         list-style: none;
     }
@@ -885,12 +885,13 @@ nav.navbar-white .active::after{
 }
 
 .navbar-white .navbar1 .dd_menu .dd_right a {
-    text-decoration: none
+    text-decoration: none;
 }
 
 .navbar-white .navbar1 .dd_menu .dd_right li {
     font-size: 15px;
     width: 100px;
+    list-style: none;
 }
 .item-flex {
     display: flex;
@@ -1208,7 +1209,7 @@ select {
     padding-top: 20%;
     padding-left: 50%;
     padding-bottom: -50%;
-    b/*ackground: linear-gradient(90deg, rgb(255 255 255) 0%, rgb(221, 178, 233) 100%);*/
+    /*ackground: linear-gradient(90deg, rgb(255 255 255) 0%, rgb(221, 178, 233) 100%);*/
 }
 
     .table table {
@@ -1228,7 +1229,7 @@ select {
     .table td, th {
         padding: 15px 20px;
         text-align: center;
-        padding: 10px 70px;
+
     }
 
     .table th {

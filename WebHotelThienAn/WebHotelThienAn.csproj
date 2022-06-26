@@ -2055,6 +2055,8 @@
     <Content Include="Content\images\blog-3.jpg" />
     <Content Include="Content\images\canho.jpg" />
     <Content Include="Content\images\DaLat.png" />
+    <Content Include="Content\images\dalat1.jpg" />
+    <Content Include="Content\images\dalat2.jpg" />
     <Content Include="Content\images\DaNang.png" />
     <Content Include="Content\images\des-1.jpg" />
     <Content Include="Content\images\des-2.jpg" />
@@ -4098,6 +4100,7 @@
     <Content Include="Views\Admin\TienNghi.cshtml" />
     <Content Include="Views\Admin\SuaPhong.cshtml" />
     <Content Include="Views\Admin\SuaChiTietTienNghi.cshtml" />
+    <Content Include="Views\Products\ShowTietAnhPhong.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

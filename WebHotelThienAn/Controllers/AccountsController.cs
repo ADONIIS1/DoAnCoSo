@@ -102,35 +102,26 @@ namespace WebHotelThienAn.Controllers
                     {
                         return RedirectToAction("NotifForm", "Accounts", new { title = "Tài Khoản Chưa Xác Thực", msg = "Tài Khoản Bạn Chưa Được Xác Thực. Vui Lòng Kiểm Tra Mail" });
                     }
+                    Session["Accouts"] = nv;
                     Session["ID"] = nv.IDTaiKhoan;
                     Session["Email"] = nv.Email;
                     Session["Name"] = nv.HoTen;
                     Session["SDT"] = nv.SDT;
                     Session["DiaChi"] = nv.DiaChi;
-                    if (String.IsNullOrEmpty(nv.MatKhau) || String.IsNullOrEmpty(nv.SDT) || String.IsNullOrEmpty(nv.DiaChi) || String.IsNullOrEmpty(nv.NgaySinh.ToString()) || String.IsNullOrEmpty(nv.GioiTinh.ToString()))
-                        return RedirectToAction("UpdateInfo", "Accounts");
-                    else
+                    if (nv.Quyen == true)//Admin
+                    {
+                        Session["Quyen"] = nv.Quyen;
+                        ViewBag.ThongBao = "Đăng nhập thành công admin";
+                        return RedirectToAction("AllProducts", "Products", new { thongbao = ViewBag.ThongBao });
+                    }
+                    if (nv.Quyen == false || nv.Quyen == null)
                     {
 
-                        Session["ID"] = nv.IDTaiKhoan;
-                        Session["Email"] = nv.Email;
-                        Session["Name"] = nv.HoTen;
-                        Session["SDT"] = nv.SDT;
-                        Session["DiaChi"] = nv.DiaChi;
-                        if (nv.Quyen == true)//Admin
-                        {
-                            Session["Accounts"] = nv;
-                            ViewBag.ThongBao = "Đăng nhập thành công admin";
-                            return RedirectToAction("KhuVuc", "Admin");
-                        }
-                        if (nv.Quyen == false || nv.Quyen == null)
-                        {
-                            ViewBag.ThongBao = "Đăng nhập thành công";
-                            return RedirectToAction("AllProducts", "Products");
-                        }
+                        ViewBag.ThongBao = "Đăng nhập thành công";
+                        return RedirectToAction("AllProducts", "Products", new { thongbao = ViewBag.ThongBao });
                     }
-
                 }
+
                 else
                 {
                     ViewBag.ThongBao = "! Tài Khoản Và Mật Khẩu Không Hợp Lệ!";
@@ -467,6 +458,12 @@ namespace WebHotelThienAn.Controllers
             }
 
             return View();
+        }
+        public ActionResult booking()
+        {
+            TaiKhoan tk = (TaiKhoan)Session["Accouts"];
+            var hoadon = db.HoaDons.Where(p => p.IDTaiKhoan == tk.IDTaiKhoan).ToList();
+            return View(hoadon);
         }
     }
 }

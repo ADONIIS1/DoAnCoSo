@@ -22,7 +22,7 @@ namespace WebHotelThienAn.Controllers
         public List<Home> LoadData()
         {
             List<Home> lsthome = new List<Home>();
-            var LoaiPhong = data.LoaiPhongs.ToList();
+            var LoaiPhong = data.LoaiPhongs.Where(p => p.TrangThai == true).ToList();
             var khuVucs = data.KhuVucs.ToList();
             foreach (var item in LoaiPhong)
             {
@@ -49,30 +49,28 @@ namespace WebHotelThienAn.Controllers
         //===================List Phong======================
         public ActionResult ProductWithArea(int? idKhuVuc, int? idLoaiPhong, int? page, string datethue, string datetra) // show Phong theo mã nhà cung cấp
         {
-           
-            var listProduct = data.Phongs.Where(p => p.IDKhuVuc.ToString().Contains(idKhuVuc.ToString()) && p.IDLoaiPhong.ToString().Contains(idLoaiPhong.ToString()) ).ToList();
+
+            var listProduct = data.Phongs.Where(p => p.IDKhuVuc.ToString().Contains(idKhuVuc.ToString()) && p.IDLoaiPhong.ToString().Contains(idLoaiPhong.ToString()) && p.TrangThai == true).ToList();
             KhuVuc kv = data.KhuVucs.Where(p => p.IDKhuVuc == idKhuVuc).FirstOrDefault();
             ViewBag.datethue = datethue;
             ViewBag.datetra = datetra;
             ViewBag.SoLuongPhong = kv.SoLuongPhong;
             ViewBag.TenKV = kv.TenKV;
             ViewBag.idKhuVuc = idKhuVuc;
-
-
             //===================phân trang======================
             int pageSize = 8; // mỗi trang 8 sản phẩm
             int pageNum = (page ?? 1); // nếu page = null => pageNum = 1
             return View(listProduct.ToPagedList(pageNum, pageSize));
         }
 
-        public ActionResult SelectArea( int? idLoaiPhong, int? page ,string datethue,string datetra) // show Phong theo mã nhà cung cấp
+        public ActionResult SelectArea(int? idLoaiPhong, int? page, string datethue, string datetra) // show Phong theo mã nhà cung cấp
         {
 
             var listProduct = data.KhuVucs.ToList();
             ViewBag.datethue = datethue;
             ViewBag.datetra = datetra;
-            LoaiPhong lp = data.LoaiPhongs.Where(p => p.IDLoaiPhong == idLoaiPhong).FirstOrDefault();
-            if(lp != null)
+            LoaiPhong lp = data.LoaiPhongs.Where(p => p.IDLoaiPhong == idLoaiPhong && p.TrangThai == true).FirstOrDefault();
+            if (lp != null)
             {
                 ViewBag.idLoaiPhong = lp.IDLoaiPhong;
                 ViewBag.TenKV = lp.TenLoaiPhong;
@@ -101,9 +99,9 @@ namespace WebHotelThienAn.Controllers
         public ActionResult ProductDetail(int? id, string datethue, string datetra)
         {
             var D_SanPham = data.Phongs.Where(m => m.MaPhong == id).First();
-             ViewBag.datethue = datethue;
-            Session["idphong"] = id;
+            ViewBag.datethue = datethue;
             ViewBag.datetra = datetra;
+            Session["idphong"] = id;
             return View(D_SanPham);
         }
         [HttpPost]
@@ -115,7 +113,7 @@ namespace WebHotelThienAn.Controllers
             var DateTra = f["dateTra"];
             var id = Session["idphong"];
             int id1 = (int)id;
-            var D_SanPham = data.Phongs.Where(m => m.MaPhong == id1 ).First();
+            var D_SanPham = data.Phongs.Where(m => m.MaPhong == id1).First();
 
             ViewBag.datethue = DateThue;
             ViewBag.datetra = DateTra;
@@ -128,12 +126,12 @@ namespace WebHotelThienAn.Controllers
                 ViewBag.songuoi = "! Số Người Trống";
             else
             {
-                return RedirectToAction("Checkout", "Booking",new {idPhong = id1 , datethue  = DateThue, datetra = DateTra });
+                return RedirectToAction("Checkout", "Booking", new { idPhong = id1, datethue = DateThue, datetra = DateTra });
             }
 
             return View(D_SanPham);
         }
-        public ActionResult ShowLoaiPhong(int? id) 
+        public ActionResult ShowLoaiPhong(int? id)
         {
             var product = data.LoaiPhongs.ToList();
 
@@ -141,9 +139,17 @@ namespace WebHotelThienAn.Controllers
 
             return PartialView(product);
         }
-        public ActionResult ShowTietIchPhong(int? MaP) 
+        public ActionResult ShowTietIchPhong(int? MaP)
         {
-            var product = data.ChiTietTienNghis.Where(p=>p.MaPhong == MaP && p.TinhTrang == true).ToList();
+            var product = data.ChiTietTienNghis.Where(p => p.MaPhong == MaP && p.TinhTrang == true).ToList();
+
+            ViewBag.MaP = MaP;
+
+            return PartialView(product);
+        }
+        public ActionResult ShowTietAnhPhong(int? MaP)
+        {
+            var product = data.AnhPhongs.Where(p => p.MaPhong == MaP).ToList();
 
             ViewBag.MaP = MaP;
 
@@ -154,8 +160,8 @@ namespace WebHotelThienAn.Controllers
             var Location = f["Location"];
             var DateThue = f["DateThue"];
             var DateTra = f["DateTra"];
-              
-            if(!String.IsNullOrEmpty(Location) )
+
+            if (!String.IsNullOrEmpty(Location))
             {
                 KhuVuc kv = data.KhuVucs.Where(p => p.TenKV == Location).FirstOrDefault();
                 if (kv != null && !String.IsNullOrEmpty(DateThue) || !String.IsNullOrEmpty(DateTra))
@@ -170,14 +176,14 @@ namespace WebHotelThienAn.Controllers
             }
             else if (!String.IsNullOrEmpty(DateThue) || !String.IsNullOrEmpty(DateTra))
             {
-                return RedirectToAction("SelectArea", "Products", new {  datethue = DateThue, datetra = DateTra });
+                return RedirectToAction("SelectArea", "Products", new { datethue = DateThue, datetra = DateTra });
             }
             else
             {
                 return RedirectToAction("SelectArea", "Products");
             }
 
-            //return RedirectToAction("Login", "Accounts", new { thongbao = ViewBag.ThongBao });
+            
         }
     }
 }

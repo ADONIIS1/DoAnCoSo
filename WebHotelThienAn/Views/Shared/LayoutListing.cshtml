@@ -31,25 +31,29 @@
             <div class="navbar1">
                 <div class="nav_right">
                     <ul>
-                        <li class="nr_li dd_main">
+                        <li style="list-style: none;" class="nr_li dd_main">
+                            <img src="~/Content/images/icons8_user_50px_9.png" alt="profile_img">
 
-                            <img src="~/Content/images/icons8_user_50px_9.png" />
                             <div class="dd_menu">
                                 <div class="dd_right">
                                     <ul>
                                         <a href="@Url.Action("UpdateInfo", "Accounts")">
-                                        <li>Hồ sơ cá nhân</li></a>
+                                        <li style="list-style: none;">Thông Tin cá nhân</li></a>
                                         <a href="@Url.Action("ChangePass", "Accounts")">
-                                        <li>Đổi Mật Khẩu</li></a>
+                                        <li style="list-style: none;">Đổi Mật Khẩu</li></a>
                                         <a href="@Url.Action("booking", "Accounts")">
-                                        <li>Phòng đã đặt</li></a>
+                                        <li style="list-style: none;">Phòng đã đặt</li></a>
+                                        @if (Session["Quyen"] != null)
+                                        {
+                                            <a href="@Url.Action("KhuVuc", "Admin")">
+                                            <li style="list-style: none;">Admin</li></a>
+                                        }
                                         <a href="@Url.Action("Logout", "Accounts")">
-                                        <li>Đăng xuất</li></a>
+                                        <li style="list-style: none;">Đăng xuất</li></a>
                                     </ul>
                                 </div>
                             </div>
                         </li>
-
                     </ul>
                 </div>
             </div>

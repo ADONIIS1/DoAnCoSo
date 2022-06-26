@@ -33,7 +33,7 @@
             <div class="navbar">
                 <div class="nav_right">
                     <ul>
-                        <li class="nr_li dd_main">
+                        <li style="list-style: none;" class="nr_li dd_main">
                             <img src="~/Content/images/icons8_user_50px_1.png" alt="profile_img">
 
                             <div class="dd_menu">
@@ -45,7 +45,7 @@
                                         <li style="list-style: none;">Đổi Mật Khẩu</li></a>
                                         <a href="@Url.Action("booking", "Accounts")">
                                         <li style="list-style: none;">Phòng đã đặt</li></a>
-                                        @if (Session["Accounts"] != null)
+                                        @if (Session["Quyen"] != null)
                                         {
                                             <a href="@Url.Action("KhuVuc", "Admin")">
                                             <li style="list-style: none;">Admin</li></a>

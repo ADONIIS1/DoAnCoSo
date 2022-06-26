@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="WebKhachSan" Class="MyDataContextDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=HUY;Initial Catalog=WebKhachSan;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="WebKhachSanConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-89C1NHO\LMSSQLSERVER;Initial Catalog=WebKhachSan;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="WebKhachSanConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AnhPhong" Member="AnhPhongs">
     <Type Name="AnhPhong">
       <Column Name="IDAnhPhong" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -17,14 +17,6 @@
       <Column Name="TinhTrang" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="Phong_ChiTietTienNghi" Member="Phong" ThisKey="MaPhong" OtherKey="MaPhong" Type="Phong" IsForeignKey="true" />
       <Association Name="TienNghi_ChiTietTienNghi" Member="TienNghi" ThisKey="IDTN" OtherKey="IDTN" Type="TienNghi" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TinhTrang" Member="TinhTrangs">
-    <Type Name="TinhTrang">
-      <Column Name="IDTinhTrang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="maTinhTrang" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="tenTinhTrang" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="TinhTrang_TaiKhoan" Member="TaiKhoans" ThisKey="maTinhTrang" OtherKey="maTinhTrang" Type="TaiKhoan" />
     </Type>
   </Table>
   <Table Name="dbo.HoaDon" Member="HoaDons">
@@ -77,7 +69,7 @@
       <Column Name="IDKhuVuc" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IDLoaiPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AnhDaiDien" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="MoTa" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="MoTa" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Vitri" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="IDKieuPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -122,6 +114,14 @@
       <Column Name="TenTN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="AnhDaiDien" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="TienNghi_ChiTietTienNghi" Member="ChiTietTienNghis" ThisKey="IDTN" OtherKey="IDTN" Type="ChiTietTienNghi" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TinhTrang" Member="TinhTrangs">
+    <Type Name="TinhTrang">
+      <Column Name="IDTinhTrang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="maTinhTrang" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tenTinhTrang" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="TinhTrang_TaiKhoan" Member="TaiKhoans" ThisKey="maTinhTrang" OtherKey="maTinhTrang" Type="TaiKhoan" />
     </Type>
   </Table>
 </Database>

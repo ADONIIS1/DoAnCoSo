@@ -8,26 +8,7 @@
     var datetra = ViewBag.datetra;
 
 }
-<script>
-         if ("@String.IsNullOrEmpty(datethue)" == "False") {
-             document.getElementsByName("datethue")[0].value = "@datethue"
-         }
 
-         if ("@String.IsNullOrEmpty(datetra)" == "False") {
-             document.getElementsByName("datetra")[0].value = "@datetra"
-         }
-         
-        function myfunction() {
-            var d1 = document.getElementsByName("datethue")[0].value;
-            var d2 = document.getElementsByName("datetra")[0].value;
-            const datengaythue = new Date(d1);
-            const datengaytra = new Date(d2);
-            if (datengaythue > datengaytra) {
-                document.getElementsByName("datethue").style.borderColer = "red";
-                document.getElementsByName("datetra").style.borderColer = "red";
-            }
-        }
-</script>
 
 @using (Html.BeginForm())
 {
@@ -49,11 +30,8 @@
             </div>
         </div>
         <div class="gallery">
-            <div class="gallery-img-1"><img src="~/Content/images/house-1.png"></div>
-            <div><img src="~/Content/images/house-2.png"></div>
-            <div><img src="~/Content/images/house-3.png"></div>
-            <div><img src="~/Content/images/house-4.png"></div>
-            <div><img src="~/Content/images/house-5.png"></div>
+            <div class="gallery-img-1"><img src="@Model.AnhDaiDien"></div>
+            @Html.Action("ShowTietAnhPhong", "Products", new { MaP = Model.MaPhong })
         </div>
         <div class="small-details">
             <h2>@Model.KieuPhong.TenKieuPhong</h2>
@@ -67,7 +45,7 @@
             <div>
 
                 <label>Ngày vào</label>
-                <input type="date"  placeholder="Add date" name="datethue">
+                <input type="date" placeholder="Add date" name="datethue">
 
             </div>
             <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.NgayThue</div>
@@ -84,8 +62,8 @@
                 <input type="number" min="1" max="5" placeholder="Nhập số Người" name="songuoi">
                 <div style="color:red; font-size:0.87rem; padding-left:1rem; padding-top:0.2rem;">@ViewBag.songuoi</div>
             </div>
-            
-            <button type="submit" onclick="myfunction()">Đặt Phòng</button>
+
+            <button type="submit" >Đặt Phòng</button>
 
         </div>
         <ul class="details-list">
@@ -121,4 +99,25 @@
         </div>
     </div>
 }
+<script>
+        //function myfunction() {
+        //    var d1 = document.getElementsByName("datethue")[0].value;
+        //    var d2 = document.getElementsByName("datetra")[0].value;
+        //    const datengaythue = new Date(d1);
+        //    const datengaytra = new Date(d2);
+        //    if (datengaythue > datengaytra) {
+        //        document.getElementsByName("datethue").style.borderColer = "red";
+        //        document.getElementsByName("datetra").style.borderColer = "red";
+        //    }
+        //}
+                 if ("@String.IsNullOrEmpty(datethue)" == "False") {
+                     document.getElementsByName("datethue")[0].value = "@datethue"
+                     }
+
+         if ("@String.IsNullOrEmpty(datetra)" == "False") {
+             document.getElementsByName("datetra")[0].value = "@datetra"
+         }
+
+
+</script>
 
