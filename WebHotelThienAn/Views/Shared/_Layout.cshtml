@@ -45,6 +45,11 @@
                                         <li style="list-style: none;">Đổi Mật Khẩu</li></a>
                                         <a href="@Url.Action("booking", "Accounts")">
                                         <li style="list-style: none;">Phòng đã đặt</li></a>
+                                        @if (Session["Accounts"] != null)
+                                        {
+                                            <a href="@Url.Action("KhuVuc", "Admin")">
+                                            <li style="list-style: none;">Admin</li></a>
+                                        }
                                         <a href="@Url.Action("Logout", "Accounts")">
                                         <li style="list-style: none;">Đăng xuất</li></a>
                                     </ul>

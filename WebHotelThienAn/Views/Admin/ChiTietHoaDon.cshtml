@@ -1,0 +1,101 @@
+﻿@model IEnumerable<WebHotelThienAn.Models.HoaDon>
+
+@{
+    ViewBag.Title = "ChiTietHoaDon";
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+<h2 style="text-align:center">Chi tiết hóa đơn</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Khách hàng
+        </th>
+        <th>
+            Phòng
+        </th>
+        <th>
+            Ngày lập
+        </th>
+        <th>
+            Ngày thuê
+        </th>
+        <th>
+            Ngày trả
+        </th>
+        <th>
+            Tình trạng
+        </th>
+        <th>
+            Tổng tiền
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDHoaDon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaiKhoan.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phong.TenPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayLap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayThue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayTra)
+            </td>
+            <td>
+                @if (item.TinhTrang == 1)
+                {
+                    <p>20%</p>
+                }
+                else if (item.TinhTrang == 2)
+                {
+                    <p>50%</p>
+                }
+                else
+                {
+                    <p>100%</p>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TongTien)
+            </td>
+            <td>
+                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-blue" href="@Url.Action("ChiTietTaiKhoan", new { TaiKhoan = item.IDTaiKhoan})">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <button type="button" data-toggle="modal" data-target="#DetailsDH" data-url="@Url.Action("DetailsHD","Admin",new {id = item.IDHoaDon })" class="btn btn-success">Chi tiết HD</button>
+            </td>
+        </tr>
+    }
+
+</table>
+<div id="Place">
+
+</div>
+
+<script type="text/javascript">
+    var PlaceEle = $('#Place');
+    $('button[data-toggle ="modal"]').click(function () {
+        var url = $(this).data('url');
+        var decor = decodeURIComponent(url);
+        $.get(decor).done(function (data) {
+            PlaceEle.html(data);
+            PlaceEle.find('.modal').modal('show');
+            window.location('/Admin/HoaDon')
+        })
+    })
+</script>

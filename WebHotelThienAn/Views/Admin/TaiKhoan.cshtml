@@ -1,0 +1,176 @@
+﻿@model  PagedList.IPagedList<WebHotelThienAn.Models.TaiKhoan>
+@using PagedList.Mvc;
+
+@{
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<h2 style="text-align:center">tài khoản</h2>
+
+
+@using (Html.BeginForm("TaiKhoan", "Admin"))
+{
+    <form>
+        <div class="form-group form-inline">
+            <input type="text" name="timkiem" value="@ViewBag.Keyword" class="form-control form-inline" />
+            <input type="submit" name="submit" value="Tìm kiếm" class="form-control" />
+        </div>
+    </form>
+}
+<table class="table">
+    <tr>
+        <th>
+            Họ tên
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            SDT
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Ngày sinh
+        </th>
+        <th>
+            Giới tính
+        </th>
+        <th>
+            Tình trạng
+        </th>
+        <th>
+            Quyền
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgaySinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GioiTinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.maTinhTrang)
+            </td>
+            <td>
+                <button class="form-control form-inline ajax-fix-to-status btn @(item.Quyen == true ? "btn-success" : "btn-danger") " data-id="@item.IDTaiKhoan">
+                    @if (item.Quyen == true)
+                    {
+                        <p>Quản lý</p>
+                    }
+                    else
+                    {
+                        <p>Người dùng</p>
+                    }
+                </button>
+            </td>
+            <td>
+                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-blue" href="@Url.Action("ChiTietHoaDon", new { TaiKhoan = item.IDTaiKhoan})">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div>
+    <div>
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) /
+        @Model.PageCount
+    </div>
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("KhuVuc", new
+        {
+            timkiem = @ViewBag.Keyword,
+            page = page
+        }))
+    </div>
+</div>
+
+<style>
+    .MenuTrang li {
+        display: inline;
+    }
+</style>
+<style type="text/css">
+    #mau-nut a {
+        clear: both;
+        background-color: orange;
+        color: snow;
+    }
+
+        #mau-nut a:hover {
+            background-color: darkcyan;
+            color: snow;
+        }
+</style>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $(".ajax-fix-to-status").click(function (e) {
+                e.preventDefault();
+                var btn = $(this);
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/StatusTaiKhoan',
+                    data: {
+                        IDSP: $(this).data("id"),
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.abc == true) {
+                            btn.text("Quản lý");
+                            $(btn).removeClass('btn-danger')
+                            $(btn).addClass('btn-success')
+                            toastr.options =
+                            {
+                                "closeButton": true,
+                                "progressBar": true
+                            }
+                            toastr.success("Tài khoản là Quản lý", "Thông Báo");
+                        }
+                        else {
+                            btn.text("Người dùng");
+                            $(btn).removeClass('btn-success')
+                            $(btn).addClass('btn-danger')
+                            toastr.options =
+                            {
+                                "closeButton": true,
+                                "progressBar": true
+                            }
+                            toastr.error("Tài khoản là người dùng", "Thông Báo");
+                        }
+
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            });
+        });
+
+    </script>
+}
