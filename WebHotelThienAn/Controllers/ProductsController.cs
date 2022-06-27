@@ -124,6 +124,8 @@ namespace WebHotelThienAn.Controllers
 
             ViewBag.datethue = DateThue;
             ViewBag.datetra = DateTra;
+            DateTime datenow = DateTime.Now;
+            
             if (String.IsNullOrEmpty(DateThue))
                 ViewBag.NgayThue = "! Ngày Thuê Trống";
             else if (String.IsNullOrEmpty(DateTra))
@@ -132,9 +134,14 @@ namespace WebHotelThienAn.Controllers
             {
                 DateTime ngaythue = DateTime.Parse((string)DateThue);
                 DateTime ngaytra = DateTime.Parse((string)DateTra);
-
+                int so = GetSoNgayThue(datenow, ngaythue);
                 int songaythue = GetSoNgayThue(ngaythue, ngaytra);
-                if (songaythue <= 0)
+                if (so < 0)
+                {
+                    ViewBag.ngaylon = "Ngày thuê Không Lớn hơn Hiên Tại";
+                }
+                
+                else if (songaythue <= 0)
                 {
                         ViewBag.datetra = DateThue;
                         ViewBag.ngaylon = "Ngày thuê Không Lớn hơn ngày trả";
